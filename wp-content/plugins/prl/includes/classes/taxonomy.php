@@ -16,7 +16,7 @@ if ( ! class_exists( 'PRL_Taxonomies' ) ) {
 					$var['post_type'],
 					array(
 						'hierarchical' => true,
-						'label' => $var['label'],
+						'label'        => $var['label'],
 					)
 				);
 			}

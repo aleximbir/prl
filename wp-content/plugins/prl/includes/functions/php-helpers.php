@@ -1,6 +1,6 @@
 <?php
 function prl_print_r( $var = '' ) {
-	$ret = '<pre>';
+	$ret  = '<pre>';
 	$ret .= print_r( $var );
 	$ret .= '</pre>';
 

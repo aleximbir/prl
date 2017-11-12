@@ -13,11 +13,11 @@ if ( ! class_exists( 'PRL_Post_Types' ) ) {
 			foreach ( $this->post_types as $key => $var ) {
 				register_post_type( 'prl_' . $var,
 					array(
-						'labels' => array(
-							'name' => ucfirst( prl_plural( $var ) ),
+						'labels'      => array(
+							'name'          => ucfirst( prl_plural( $var ) ),
 							'singular_name' => ucfirst($var),
 						),
-						'public' => true,
+						'public'      => true,
 						'has_archive' => true,
 					)
 				);
