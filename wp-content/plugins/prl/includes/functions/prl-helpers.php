@@ -72,3 +72,7 @@ function prl_form( $arr = '' ) {
 
 	return $ret;
 }
+
+function prl_lbl( $label ){
+	return __( $label, 'prl' );
+}
