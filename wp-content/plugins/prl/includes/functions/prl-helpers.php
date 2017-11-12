@@ -76,3 +76,17 @@ function prl_form( $arr = '' ) {
 function prl_lbl( $label ){
 	return __( $label, 'prl' );
 }
+
+function prl_plural( $word ) {
+	$plural='';
+	
+	for ( $i=0; $i < strlen( $word ); $i++ ) {
+		if ( $i == strlen( $word ) - 1 ) {
+			$plural .= ( $word[$i] == 'y' ) ? 'ies' : ( ( $word[$i] == 's'|| $word[$i] == 'x' || $word[$i] == 'z' || $word[$i] == 'ch' || $word[$i] == 'sh' ) ? $word[$i] . 'es' : $word[$i] . 's' );
+		} else {
+			$plural .= $word[$i];
+		}
+	}
+
+	return $plural;
+}
