@@ -28,30 +28,14 @@ function prl_load_scripts() {
 	wp_enqueue_script( 'semantic-js', plugins_url( '/assets/js/semantic.min.js', __FILE__ ), array( 'jquery' ), prl_VERSION );
 }
 
-
-
 add_action( 'init', 'prl_include_shortcodes' );
 function prl_include_shortcodes(){
+
 	include_once prl_dir_url() . 'includes/functions/prl-general-functions.php';
 
 	$shortcodes = prl_scan_folders( prl_dir_url() . 'controllers' );
 	foreach ( $shortcodes as $key => $var ) {
 		include_once $var;
 	}
-}
-
-function prl_scan_folders( $dir, &$ret = [] ) {
-	$files = scandir( $dir );
-
-	foreach ( $files as $key => $filename ) {
-		$path = realpath( $dir . DIRECTORY_SEPARATOR . $filename );
-		if ( ! is_dir( $path ) ) {
-			$ret[] = $path;
-		} else if ( $filename != "." && $filename != ".." ) {
-			prl_scan_folders( $path, $ret );
-		}
-	}
-
-	return $ret;
 }
 

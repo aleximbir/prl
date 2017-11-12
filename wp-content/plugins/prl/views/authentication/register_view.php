@@ -1,4 +1,4 @@
-<form class="ui form">
+<form class="ui form" method="post" action="<?php echo $register_page; ?>">
 
 	<div class="field">
 		<label>Name</label>
@@ -22,6 +22,6 @@
 		</div>
 	</div>
 
-	<div class="ui button" tabindex="0">Register</div>
+	<?php echo $btn_register; ?>
 	
 </form>

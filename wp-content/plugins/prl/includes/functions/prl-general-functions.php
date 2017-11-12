@@ -1,6 +1,6 @@
 <?php
 
-function prl_print_r( $var='' ){
+function prl_print_r( $var = '' ) {
 	$ret = '<pre>';
 	$ret .= print_r( $var );
 	$ret .= '</pre>';
@@ -8,7 +8,7 @@ function prl_print_r( $var='' ){
 	return $ret;
 }
 
-function prl_form( $arr='' ){
+function prl_form( $arr = '' ) {
 	$ret = '';
 
 	if ( $arr ) {
@@ -54,7 +54,7 @@ function prl_form( $arr='' ){
 	return $ret;
 }
 
-function prl_view( $view_name, $vars ) {
+function prl_view( $view_name = '', $vars = '' ) {
 	ob_start();
 
 	foreach ( $vars as $key => $var ) {
@@ -64,6 +64,45 @@ function prl_view( $view_name, $vars ) {
 	include prl_dir_url() . 'views/' . $view_name . '_view.php';
 	$ret = ob_get_contents();
 	ob_clean();
+
+	return $ret;
+}
+
+function prl_model( $model_name = '', $vars = '' ) {
+	ob_start();
+
+	foreach ( $vars as $key => $var ) {
+		$$key = $var;
+	}
+
+	include prl_dir_url() . 'models/' . $model_name . '_model.php';
+	$ret = ob_get_contents();
+	ob_clean();
+
+	return $ret;
+}
+
+function prl_scan_folders( $dir = '', &$ret = [] ) {
+	$files = scandir( $dir );
+
+	foreach ( $files as $key => $filename ) {
+		$path = realpath( $dir . DIRECTORY_SEPARATOR . $filename );
+		if ( ! is_dir( $path ) ) {
+			$ret[] = $path;
+		} else if ( $filename != "." && $filename != ".." ) {
+			prl_scan_folders( $path, $ret );
+		}
+	}
+
+	return $ret;
+}
+
+function prl_isset_post( $var = '' ) {
+	if ( isset( $_POST[$var] ) ) {
+		$ret = $_POST[$var];
+	} else {
+		$ret = '';
+	}
 
 	return $ret;
 }
