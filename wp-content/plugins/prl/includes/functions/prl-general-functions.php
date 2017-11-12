@@ -39,18 +39,31 @@ function prl_form( $arr='' ){
 		$value = isset( $value ) ? $value : '';
 		$ret .= ' value="' . $value . '"';
 
-		if ( $type != 'textarea' && isset( $placeHolder ) ) {
-			$ret .= ' placeHolder="' . $placeHolder . '"';
+		if ( $type != 'textarea' && isset( $placeholder ) ) {
+			$ret .= ' placeholder="' . $placeholder . '"';
 		}
 
 		if ( $type != 'textarea' ) {
 			$ret .= ' />';
 		} else {
-			$placeHolder = isset( $placeHolder ) ? $placeHolder : '';
-			$ret = '>' . $placeHolder . '</textarea>';
+			$placeholder = isset( $placeholder ) ? $placeholder : '';
+			$ret = '>' . $placeholder . '</textarea>';
 		}
 	}
 
 	return $ret;
 }
 
+function prl_view( $view_name, $vars ) {
+	ob_start();
+
+	foreach ( $vars as $key => $var ) {
+		$$key = $var;
+	}
+
+	include prl_dir_url() . 'views/' . $view_name . '_view.php';
+	$ret = ob_get_contents();
+	ob_clean();
+
+	return $ret;
+}
