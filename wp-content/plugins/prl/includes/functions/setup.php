@@ -25,8 +25,14 @@ function prl_load_scripts() {
 add_action( 'init', 'prl_includes' );
 function prl_includes(){
 
+	// Classes
+	$classes = prl_scan_folders( prl_plugin_path() . 'includes/classes' );
+	foreach ( $classes as $ckey => $cvar ) {
+		include_once $cvar;
+	}
+
 	// Functions
-	$functions = prl_scan_folders( prl_plugin_path() . 'includes' );
+	$functions = prl_scan_folders( prl_plugin_path() . 'includes/functions' );
 	foreach ( $functions as $fkey => $fvar ) {
 		include_once $fvar;
 	}
@@ -38,6 +44,17 @@ function prl_includes(){
 	}
 }
 
+// Plugin Activation
+register_activation_hook( __FILE__, 'prl_activation' );
+function prl_activation(){
+
+	// Activation
+	$classes = prl_scan_folders( prl_plugin_path() . 'includes/first-run' );
+	foreach ( $classes as $ckey => $cvar ) {
+		include_once $cvar;
+	}
+
+}
 // Get files path from folders
 function prl_scan_folders( $dir = '', &$ret = [] ) {
 	$files = scandir( $dir );
