@@ -2,15 +2,15 @@
 add_action( 'init', 'prl_taxonomy_arr', 11 );
 function prl_taxonomy_arr() {
 	$args = array(
-		array(
-			'name'      => 'product_type',
-			'post_type' => 'prl_product',
-			'label'     => prl_lbl( 'Product Type' ),
+		'product_type' => array(
+			'singular_name' => prl_lbl( 'Product Type' ),
+			'plural_name'   => prl_lbl( 'Product Types' ),
+			'post_type' => 'prl_products',
 		),
-		array(
-			'name'      => 'product_category',
-			'post_type' => 'prl_product',
-			'label'     =>  prl_lbl( 'Product Category' ),
+		'product_category' => array(
+			'singular_name' => prl_lbl( 'Product Category' ),
+			'plural_name'   => prl_lbl( 'Product Categories' ),
+			'post_type' => 'prl_products',
 		),
 	);
 
