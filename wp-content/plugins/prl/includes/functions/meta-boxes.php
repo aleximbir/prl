@@ -41,6 +41,13 @@ function prl_product_meta_boxes( ){
 				'default' => '',
 				'type'    => 'textarea',
 			),
+			array(
+				'name'    => 'product_fields',
+				'label'   => prl_lbl( 'Fields' ),
+				'default' => '',
+				'type'    => 'repeater',
+				'class'   => ''
+			),
 		)
 	);
 	prl_meta_boxes( $args_normal );

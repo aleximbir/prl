@@ -1,0 +1,33 @@
+/* Add new product page */
+.repeater-wrapper .repeater-row {
+	margin: 15px auto;
+}
+.repeater-wrapper #fields-count {
+	box-shadow: 2px 3px 10px #888888;
+	padding-left: 20px;
+}
+.repeater-wrapper #fields-to-repeat {
+	box-shadow: 2px 3px 10px #888888;
+	padding: 20px;
+}
+.repeater-wrapper input {
+	border: 1px solid #c0c0c0;
+	width: 40%;
+	height: 35px;
+}
+.repeater-wrapper select {
+	height: 35px;
+	margin-top: -3px;
+	border: 1px solid #c0c0c0;
+}
+.repeater-wrapper select#repeater-rows-count {
+	margin: 10px;
+}
+.hide-repeater-row.toggle-indicator {
+	float: right;
+	cursor: pointer;
+	margin: 15px;
+	border-radius: 50%;
+	border: 1px solid #72777c;
+	padding: 0px 3px 0px 2px;
+}

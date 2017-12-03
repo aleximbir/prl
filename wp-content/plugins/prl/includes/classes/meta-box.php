@@ -81,6 +81,9 @@ if ( ! class_exists( 'PRL_Meta_Boxes' ) ) {
 				elseif( $field['type'] == 'wysiwyg' ){
 					echo $this->field_wysiwyg( $field );
 				}
+				elseif( $field['type'] == 'repeater' ){
+					echo $this->field_repeater( $field );
+				}
 			}
 			
 
@@ -305,6 +308,62 @@ if ( ! class_exists( 'PRL_Meta_Boxes' ) ) {
 				
 				$html	.= '</div>';
 			$html	.= '</fieldset>';
+			return $html;
+		}
+
+		public function field_repeater( $field ) {
+			global $post;
+
+			$field['default'] = ( isset( $field['default'] ) ) ? $field['default'] : '';
+			$value = get_post_meta( $post->ID, $field['name'], true ) != '' ? esc_attr ( get_post_meta( $post->ID, $field['name'], true ) ) : $field['default'];
+			$class  = isset( $field['class'] ) && ! is_null( $field['class'] ) ? $field['class'] : 'prl-meta-field';
+			$readonly  = isset( $field['readonly'] ) && ( $field['readonly'] == true ) ? " readonly" : "";
+			$disabled  = isset( $field['disabled'] ) && ( $field['disabled'] == true ) ? " disabled" : "";
+
+			$html	= sprintf( '<fieldset class="prl-row" id="prl_cmb_fieldset_%1$s">', $field['name'] );
+				if ( isset( $field['label'] ) ) {
+					$html	.= sprintf( '<label class="prl-label" for="prl_cmb_%1$s">%2$s</label>', $field['name'], $field['label']);
+				}
+				$html .= '<div class="repeater-wrapper">';
+					$html .= '<div class="repeater-row" id="repeater-row">';
+						$html .= '<div id="fields-count">';
+							$html .= '<label>' . prl_lbl( 'Fields per row' ) . ':</label><i class="fa fa-hand-o-up" aria-hidden="true"></i>';
+							$html .= '<select name="repeater-rows-count" id="repeater-rows-count">';
+								for ( $i=1; $i<=16; $i++ ) {
+									$html .= '<option value="' . $i . '">' . $i . '</option>';
+								}
+							$html .= '</select>';
+							$html .= '<div class="hide-repeater-row toggle-indicator"></div>';
+						$html .= '</div>';
+						
+						$html .= '<div id="fields-to-repeat">';
+							$html .= '<div id="field">';
+								$html .= '<input type="text" placeHolder="' . prl_lbl( 'Name' ) . '" name="repeater-inp-name" />';
+								$html .= '&nbsp';
+								$html .= '<select name="repeater-inp-type" id="repeater-inp-type">';
+									$html .= '<option value="">' . prl_lbl( 'Type' ) . '</option>';
+									$html .= '<option value="text">Text</option>';
+									$html .= '<option value="radio">Radio</option>';
+									$html .= '<option value="checkbox">Checkbox</option>';
+									$html .= '<option value="textarea">Textarea</option>';
+									$html .= '<option value="slide">Slide</option>';
+									$html .= '<option value="select">Select</option>';
+									$html .= '<option value="file">File</option>';
+									$html .= '<option value="color">Color</option>';
+									$html .= '<option value="wysiwyg">WYSIWYG</option>';
+								$html .= '</select>';
+							$html .= '</div>';
+						$html .= '</div>';
+
+					$html .= '</div>';
+
+				$html .= '</div>';
+
+				$html .= '<button id="repeater-new-row" class="button button-primary button-large">' . prl_lbl( 'Add New Row' ) . '</button>';
+
+				$html	.= $this->field_description( $field );
+			$html	.= '</fieldset>';
+
 			return $html;
 		}
 
