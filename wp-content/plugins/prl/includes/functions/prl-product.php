@@ -16,7 +16,7 @@ function get_repeater_content( $html = '' ) {
 				}
 			$html .= '</select>';
 
-			$html .= '<div class="row-name-list"></div>';
+			$html .= '<div class="row-name-list"><span></span></div>';
 
 			$html .= '<div class="remove-row">Delete</div>';
 

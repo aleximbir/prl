@@ -22,12 +22,31 @@ jQuery( document ).ready( function( $ ) {
 	$( document ).on( 'change', '#repeater-rows-count', function( e ) { 
 		e.preventDefault();
 
-		$( this ).parent().parent().children( "#fields-to-repeat" ).empty();
-		$( this ).siblings( '.row-name-list' ).empty();
+		span = $( this ).siblings( '.row-name-list' ).find('span');
 
-		for( row = 1; row <= $( this ).val(); row++ ) {
-			$( this ).parent().parent().children( "#fields-to-repeat" ).append( base_prl_admin_main.repeater_field_content );
-			$( this ).siblings( '.row-name-list' ).append( '<span></span>' );
+		field = $( this ).parent().siblings( '#fields-to-repeat' ).children( '#field' );
+
+		field_val = $( this ).val();
+
+		fields_no = $( this ).parent().siblings( '#fields-to-repeat' ).children( '#field' ).length;
+		
+		if ( parseInt( $( this ).val() ) > parseInt( fields_no ) ) {
+			for( row = fields_no; row < $( this ).val(); row++ ) {
+				$( this ).parent().parent().children( "#fields-to-repeat" ).append( base_prl_admin_main.repeater_field_content );
+				$( this ).siblings( '.row-name-list' ).append( '<span></span>' );
+			}
+		} else if ( parseInt( $( this ).val() ) < parseInt( fields_no ) ) {
+			field.each( function() {
+				if( $( this ).index() >= field_val ){
+					$( this ).remove();
+				}
+			});
+
+			span.each( function() {
+				if( $( this ).index() >= field_val ){
+					$( this ).remove();
+				}
+			});
 		}
 	});
 
