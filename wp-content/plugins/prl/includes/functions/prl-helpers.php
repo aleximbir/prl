@@ -37,10 +37,12 @@ function prl_form( $arr = '' ) {
 
 		$type = ! isset( $type ) ? 'input' : $type;
 
-		if ( $type != 'textarea' ) {
-			$ret .= '<input type="' . $type . '"';
-		} else {
+		if ( $type == 'textarea' ) {
 			$ret .= '<textarea';
+		} elseif( $type == 'select' ) {
+			$ret .= '<select';
+		} else {
+			$ret .= '<input type="' . $type . '"';
 		}
 
 		if ( isset( $name ) ) {
@@ -55,24 +57,32 @@ function prl_form( $arr = '' ) {
 			$ret .= ' class="' . $class . '"';
 		}
 
-		$value = isset( $value ) ? $value : '';
-		$ret .= ' value="' . $value . '"';
+		if ( $type != 'select' ) {
+			$value = isset( $value ) ? $value : '';
+			$ret .= ' value="' . $value . '"';
+		}
 
-		if ( $type != 'textarea' && isset( $placeholder ) ) {
+		if ( $type != 'textarea' && $type != 'select' && isset( $placeholder ) ) {
 			$ret .= ' placeholder="' . $placeholder . '"';
 		}
 
-		if ( $type != 'textarea' ) {
-			$ret .= ' />';
-		} else {
+		if ( $type == 'textarea' ) {
 			$placeholder = isset( $placeholder ) ? $placeholder : '';
-			$ret = '>' . $placeholder . '</textarea>';
+			$ret .= '>' . $placeholder . '</textarea>';
+		} elseif( $type == 'select' ) {
+			$ret .= '></select>';
+		} else {
+			$ret .= ' />';
 		}
 	}
 
 	return $ret;
 }
 
-function prl_lbl( $label ){
-	return __( $label, 'prl' );
+function prl_lbl( $label, $tag = false ) {
+	if ( $tag ) {
+		return '<label>' . __( $label, 'prl' ) . '</label>';
+	} else {
+		return __( $label, 'prl' );
+	}
 }

@@ -53,7 +53,83 @@ function get_repeater_fields_content( $html = '' ) {
 			$html .= '<option value="color">Color</option>';
 			$html .= '<option value="wysiwyg">WYSIWYG</option>';
 		$html .= '</select>';
+
+		$html .= '<div class="popup-wrapper">';
+			$html .= '<span id="prl-settings-modal" class="dashicons dashicons-admin-tools"></span>';
+			$html .= '<div class="prl-popup"></div>';
+		$html .= '</div>';
 	$html .= '</div>';
+
+	return $html;
+}
+
+function get_input_type_none_content( $html = '' ) {
+	$html .= '<span id="prl-close-modal" class="dashicons dashicons-no-alt"></span>';
+	$html .= '<span>Please choose the type of the field!</span>';
+
+	return $html;
+}
+
+function get_input_type_text_content( $html = '' ) {
+	$html .= '<span id="prl-close-modal" class="dashicons dashicons-no-alt"></span>';
+	
+	$html .= prl_lbl( 'PlaceHolder', true );
+	$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-placeholder' ) );
+	
+	$html .= prl_lbl( 'Default Value', true );
+	$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-default-value' ) );
+	
+	$html .= prl_lbl( 'Class', true );
+	$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-class' ) );
+	
+	$html .= prl_lbl( 'ID', true );
+	$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-id' ) );
+	
+	$html .= prl_lbl( 'Read Only', true );
+	$html .= prl_form( array( 'type' => 'radio', 'name' => 'repeater-type-read-only', 'value' => 'yes' ) );
+	$html .= prl_lbl( 'Yes' );
+	$html .= prl_form( array( 'type' => 'radio', 'name' => 'repeater-type-read-only', 'value' => 'no' ) );
+	$html .= prl_lbl( 'No' );
+
+	$html .= prl_lbl( 'Disabled', true );
+	$html .= prl_form( array( 'type' => 'radio', 'name' => 'repeater-type-disabled', 'value' => 'yes' ) );
+	$html .= prl_lbl( 'Yes' );
+	$html .= prl_form( array( 'type' => 'radio', 'name' => 'repeater-type-disabled', 'value' => 'no' ) );
+	$html .= prl_lbl( 'No' );
+	
+	$html .= '<button id="repeater-type-save" class="button button-primary button-large">Save</button>';
+
+	return $html;
+}
+
+function get_input_type_radio_content( $html = '' ) {
+	$html .= '<span id="prl-close-modal" class="dashicons dashicons-no-alt"></span>';
+
+	$html .= prl_lbl( 'Values', true );
+	$html .= prl_form( array( 'type' => 'textarea', 'name' => 'repeater-type-values', 'id' => 'repeater-type-values', 'placeholder' => prl_lbl( 'One value per line' ) ) );
+
+	$html .= prl_lbl( 'Default Value', true );
+	$html .= prl_form( array( 'type' => 'select', 'name' => 'repeater-type-default-values', 'id' => 'repeater-type-default-values' ) );
+
+	$html .= prl_lbl( 'Class', true );
+	$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-class' ) );
+	
+	$html .= prl_lbl( 'ID', true );
+	$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-id' ) );
+	
+	$html .= prl_lbl( 'Read Only', true );
+	$html .= prl_form( array( 'type' => 'radio', 'name' => 'repeater-type-read-only', 'value' => 'yes' ) );
+	$html .= prl_lbl( 'Yes' );
+	$html .= prl_form( array( 'type' => 'radio', 'name' => 'repeater-type-read-only', 'value' => 'no' ) );
+	$html .= prl_lbl( 'No' );
+
+	$html .= prl_lbl( 'Disabled', true );
+	$html .= prl_form( array( 'type' => 'radio', 'name' => 'repeater-type-disabled', 'value' => 'yes' ) );
+	$html .= prl_lbl( 'Yes' );
+	$html .= prl_form( array( 'type' => 'radio', 'name' => 'repeater-type-disabled', 'value' => 'no' ) );
+	$html .= prl_lbl( 'No' );
+	
+	$html .= '<button id="repeater-type-save" class="button button-primary button-large">Save</button>';
 
 	return $html;
 }
