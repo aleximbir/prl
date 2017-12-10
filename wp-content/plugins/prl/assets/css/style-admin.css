@@ -74,17 +74,11 @@
 	cursor: pointer;
 }
 .repeater-wrapper .prl-popup {
-	background: #fff;
-	box-shadow: 2px 3px 10px #888888;
 	border: 1px solid #c0c0c0;
-	width: 205px;
-	position: absolute;
-	top: -9px;
-	border-radius: 0px;
-	left: 47px;
 	padding: 30px;
-	z-index: 9;
 	display: none;
+	margin-left: 1px;
+	margin-top: 7px;
 }
 .repeater-wrapper .prl-popup input[type="text"] {
 	height: 25px;
