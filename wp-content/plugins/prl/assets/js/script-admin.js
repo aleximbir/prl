@@ -38,8 +38,10 @@ jQuery( document ).ready( function( $ ) {
 		var $current_row = $( this ).siblings( "#fields-to-repeat" );
 		if ( $current_row.css( "display" ) == "none" ) {
 			$current_row.slideDown();
+			$( this ).children(".toggle-indicator-up").attr('class', 'toggle-indicator');
 		} else {
 			$current_row.slideUp();
+			$( this ).children(".toggle-indicator").attr('class', 'toggle-indicator-up');
 		}
 	});
 
