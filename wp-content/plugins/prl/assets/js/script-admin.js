@@ -1,42 +1,63 @@
 jQuery( document ).ready( function( $ ) {
 
-	var cloneCount = 1;
-	
-	$( '#repeater-new-row' ).click( function( e ) {
-		e.preventDefault();
-		$( "#repeater-row" ).clone().attr( 'id', 'repeater-row' + cloneCount++ ).insertAfter( "#repeater-row" );
-	});
+/*** PRODUCTS ***/
 
-	$( '#repeater-rows-count' ).change( function( e ) {
+	// Add New Row
+	var i = 1;
+	$( document ).on( 'click', '#repeater-new-row', function( e ) {
 		e.preventDefault();
 
-		var field_content = $( "#field" ).clone().attr({ 'id' : 'field' + cloneCount++ });
+		var $content = $( base_prl_admin_main.repeater_content ); i++;
 
-		$("#fields-to-repeat > *:not('#field')").remove();
-		for( row = 1; row <= $( this ).val(); row++ ){
-			$( "#fields-to-repeat" ).append('\
-				<div id="field'+ cloneCount++ +'">\
-				<input type="text" placeHolder="Name" name="repeater-inp-name" />\
-				<select name="repeater-inp-type" id="repeater-inp-type">\
-					<option value="">Type</option>\
-					<option value="text">Text</option>\
-					<option value="radio">Radio</option>\
-					<option value="checkbox">Checkbox</option>\
-					<option value="textarea">Textarea</option>\
-					<option value="slide">Slide</option>\
-					<option value="select">Select</option>\
-					<option value="file">File</option>\
-					<option value="color">Color</option>\
-					<option value="wysiwyg">WYSIWYG</option>\
-				</select>\
-			</div>\
-			');
+		$content.filter('.repeater-row').attr( 'id', 'repeater-row' + i );
+
+		if ( $( '.repeater-wrapper' ).is( ':empty' ) ) {
+			$( ".repeater-wrapper" ).append( $( $content[0] ) );
+		} else {
+			$( $content[0] ).insertAfter( $( ".repeater-row" ).last() );
 		}
 	});
 
-	$( '.hide-repeater-row.toggle-indicator' ).click( function( e ) {
+	// Add Fields In Row
+	$( document ).on( 'change', '#repeater-rows-count', function( e ) { 
 		e.preventDefault();
-		$( "#fields-to-repeat" ).toggle('show');
+
+		$( this ).parent().parent().children( "#fields-to-repeat" ).empty();
+		$( this ).siblings( '.row-name-list' ).empty();
+
+		for( row = 1; row <= $( this ).val(); row++ ) {
+			$( this ).parent().parent().children( "#fields-to-repeat" ).append( base_prl_admin_main.repeater_field_content );
+			$( this ).siblings( '.row-name-list' ).append( '<span></span>' );
+		}
 	});
+
+	// Show/Hide Row Content
+	$( document ).on( 'click', '#handlediv-prl-row', function( e ) {
+		e.preventDefault();
+
+		var $current_row = $( this ).siblings( "#fields-to-repeat" );
+		if ( $current_row.css( "display" ) == "none" ) {
+			$current_row.slideDown();
+		} else {
+			$current_row.slideUp();
+		}
+	});
+
+	// Remove the row
+	$( document ).on( 'click', '.remove-row', function( e ) { 
+		e.preventDefault();
+
+		$( this ).parent().parent().slideUp( 500, function() {
+			$( this ).remove();
+		});
+	});
+
+	// Display fields name on row
+	$( document ).on( 'change', '#field input', function( e ) {
+		input_index = $(this).parent().index();
+		$( this ).parent().parent().siblings( '#fields-count' ).children( '.row-name-list' ).children( 'span' ).eq(input_index).text( $( this ).val() + '; ' );
+	});
+
+/*** END PRODUCTS ***/
 
 });

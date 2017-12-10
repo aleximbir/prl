@@ -325,44 +325,16 @@ if ( ! class_exists( 'PRL_Meta_Boxes' ) ) {
 					$html	.= sprintf( '<label class="prl-label" for="prl_cmb_%1$s">%2$s</label>', $field['name'], $field['label']);
 				}
 				$html .= '<div class="repeater-wrapper">';
-					$html .= '<div class="repeater-row" id="repeater-row">';
-						$html .= '<div id="fields-count">';
-							$html .= '<label>' . prl_lbl( 'Fields per row' ) . ':</label><i class="fa fa-hand-o-up" aria-hidden="true"></i>';
-							$html .= '<select name="repeater-rows-count" id="repeater-rows-count">';
-								for ( $i=1; $i<=16; $i++ ) {
-									$html .= '<option value="' . $i . '">' . $i . '</option>';
-								}
-							$html .= '</select>';
-							$html .= '<div class="hide-repeater-row toggle-indicator"></div>';
-						$html .= '</div>';
-						
-						$html .= '<div id="fields-to-repeat">';
-							$html .= '<div id="field">';
-								$html .= '<input type="text" placeHolder="' . prl_lbl( 'Name' ) . '" name="repeater-inp-name" />';
-								$html .= '&nbsp';
-								$html .= '<select name="repeater-inp-type" id="repeater-inp-type">';
-									$html .= '<option value="">' . prl_lbl( 'Type' ) . '</option>';
-									$html .= '<option value="text">Text</option>';
-									$html .= '<option value="radio">Radio</option>';
-									$html .= '<option value="checkbox">Checkbox</option>';
-									$html .= '<option value="textarea">Textarea</option>';
-									$html .= '<option value="slide">Slide</option>';
-									$html .= '<option value="select">Select</option>';
-									$html .= '<option value="file">File</option>';
-									$html .= '<option value="color">Color</option>';
-									$html .= '<option value="wysiwyg">WYSIWYG</option>';
-								$html .= '</select>';
-							$html .= '</div>';
-						$html .= '</div>';
-
-					$html .= '</div>';
-
-				$html .= '</div>';
+					ob_start();
+					echo get_repeater_content();
+					$html .= ob_get_contents();
+					ob_clean();
+				$html .= '</div>'; // END repeater-wrapper
 
 				$html .= '<button id="repeater-new-row" class="button button-primary button-large">' . prl_lbl( 'Add New Row' ) . '</button>';
 
-				$html	.= $this->field_description( $field );
-			$html	.= '</fieldset>';
+				$html .= $this->field_description( $field );
+			$html .= '</fieldset>';
 
 			return $html;
 		}

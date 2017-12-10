@@ -23,11 +23,19 @@
 .repeater-wrapper select#repeater-rows-count {
 	margin: 10px;
 }
-.hide-repeater-row.toggle-indicator {
-	float: right;
+.repeater-wrapper .remove-row {
+	position: absolute;
+	right: 13px;
+	top: 30px;
 	cursor: pointer;
-	margin: 15px;
-	border-radius: 50%;
-	border: 1px solid #72777c;
-	padding: 0px 3px 0px 2px;
+}
+.row-name-list {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	height: 15px;
+	width: 50%;
+	display: inline-block;
+	padding: 0px 25px;
+	top: 4px;
+	position: relative;
 }
