@@ -106,4 +106,22 @@
 	color: #ff0000;
 	cursor: pointer;
 }
+#repeater-new-row {
+	margin-top: 10px;
+	box-shadow: 2px 3px 10px #888888;
+}
+.repeater-wrapper .popup-wrapper .prl-read-only .yes {
+	display: inline;
+	margin-right: 20px;
+}
+.repeater-wrapper .popup-wrapper .prl-read-only .no {
+	display: inline;
+}
+.repeater-wrapper .popup-wrapper .prl-disabled .yes {
+	display: inline;
+	margin-right: 20px;
+}
+.repeater-wrapper .popup-wrapper .prl-disabled .no {
+	display: inline;
+}
 /*** END ADD NEW PRODUCT ***/

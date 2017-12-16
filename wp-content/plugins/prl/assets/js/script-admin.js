@@ -79,45 +79,70 @@ jQuery( document ).ready( function( $ ) {
 		$( this ).parent().parent().siblings( '#fields-count' ).children( '.row-name-list' ).children( 'span' ).eq(input_index).text( $( this ).val() + '; ' );
 	});
 
-	// Open settings popup
-	$( document ).on( 'click', '#prl-settings-modal', function( e ) {
-		$( '.prl-popup' ).slideDown();
-
-		var inp_type = $( '#repeater-inp-type' ).val();
-
-		$( ".prl-popup" ).empty();
+	function get_popup_content( input ) {
+		var inp_type = input.val();
 
 		var content = ''
 
-		if ( inp_type == 'text' ) {
+		if ( inp_type == 'text' || inp_type == 'textarea' || inp_type == 'wysiwyg' ) {
 			content = base_prl_admin_main.repeater_text_field_content;
-		} else if( inp_type == 'radio' ) {
+		} else if ( inp_type == 'radio' || inp_type == 'checkbox' || inp_type == 'select' ) {
 			content = base_prl_admin_main.repeater_radio_field_content;
+		} else if ( inp_type == 'toggle' ) {
+			content = base_prl_admin_main.repeater_toggle_field_content;
+		} else if ( inp_type == 'file' ) {
+			content = base_prl_admin_main.repeater_file_field_content;
 		} else {
 			content = base_prl_admin_main.repeater_none_field_content;
 		}
 
-		$( ".prl-popup" ).append( $( content ) );
+		return content;
+	}
+
+	// Open settings popup
+	$( document ).on( 'click', '#prl-settings-modal', function( e ) {
+
+		var content = get_popup_content( $( this ).parent().siblings( '#repeater-inp-type' ) );
+
+		if( $( this ).siblings( '.prl-popup' ).is(':empty') ) {
+			$( this ).siblings( '.prl-popup' ).append( $( content ) );
+		}
+
+		$( this ).siblings( '.prl-popup' ).slideDown();
+		
+	});
+
+	// Empty popup onchange
+	$( document ).on( 'change', '#repeater-inp-type', function( e ) {
+
+		var content = get_popup_content( $( this ) );
+
+		$( this ).siblings( '.popup-wrapper' ).children( '.prl-popup' ).empty();
+
+		if ( $( this ).siblings( '.popup-wrapper' ).children( '.prl-popup' ).css( "display" ) == "block" ) {
+			$( this ).siblings( '.popup-wrapper' ).children( '.prl-popup' ).append( $( content ) );
+		}
 	});
 
 	// Close settings popup
 	$( document ).on( 'click', '#prl-close-modal, #repeater-type-save', function( e ) { 
 		e.preventDefault();
 
-		$( '.prl-popup' ).slideUp( 500, function() {
+		$( this ).parent().slideUp( 500, function() {
 			$( this ).hide();
 		});
 	});
 
 	// Populate default values
 	$( document ).on( 'change', '#repeater-type-values', function( e ) {
-		$( "#repeater-type-default-values" ).empty();
+		var repeater_values = $( this ).siblings( "#repeater-type-default-values" );
+		repeater_values.empty();
 
-		var values = $( "#repeater-type-values" ).val().split("\n");
+		var values = $( this ).val().split("\n");
 		$.each( values, function( index, value ) {
 			value_formatted = value.replace(/ /g,"_");
 			value_formatted = value_formatted.toLowerCase();
-			$( '#repeater-type-default-values' ).append('<option value="' + value_formatted + '">' + value + '</option>');
+			repeater_values.append('<option value="' + value_formatted + '">' + value + '</option>');
 		});
 	});
 

@@ -57,18 +57,18 @@ function prl_form( $arr = '' ) {
 			$ret .= ' class="' . $class . '"';
 		}
 
-		if ( $type != 'select' ) {
+		if (  $type != 'textarea' && $type != 'select' ) {
 			$value = isset( $value ) ? $value : '';
 			$ret .= ' value="' . $value . '"';
 		}
 
-		if ( $type != 'textarea' && $type != 'select' && isset( $placeholder ) ) {
+		if ( $type != 'select' && isset( $placeholder ) ) {
 			$ret .= ' placeholder="' . $placeholder . '"';
 		}
 
 		if ( $type == 'textarea' ) {
-			$placeholder = isset( $placeholder ) ? $placeholder : '';
-			$ret .= '>' . $placeholder . '</textarea>';
+			$value = isset( $value ) ? $value : '';
+			$ret .= '>' . $value . '</textarea>';
 		} elseif( $type == 'select' ) {
 			$ret .= '></select>';
 		} else {
@@ -79,9 +79,11 @@ function prl_form( $arr = '' ) {
 	return $ret;
 }
 
-function prl_lbl( $label, $tag = false ) {
-	if ( $tag ) {
+function prl_lbl( $label, $tag = false, $class = '' ) {
+	if ( $tag && !$class ) {
 		return '<label>' . __( $label, 'prl' ) . '</label>';
+	} elseif ( $tag && $class ) {
+		return '<label class="' . $class . '">' . __( $label, 'prl' ) . '</label>';
 	} else {
 		return __( $label, 'prl' );
 	}

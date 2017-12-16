@@ -19,7 +19,7 @@ function prl_product_meta_boxes( ){
 	$args_normal = array(
 		'meta_box_id'   => 'product_meta_normal',
 		'label'         => prl_lbl( 'Extra Fields' ),
-		'post_type'     => array( 'prl_products' ),
+		'post_type'     => 'page',
 		'context'       => 'normal',
 		'priority'      => 'high',
 		'fields'        => array(

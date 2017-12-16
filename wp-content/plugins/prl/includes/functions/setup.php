@@ -36,6 +36,8 @@ function prl_load_admin_scripts_and_styles() {
 		'repeater_text_field_content' => get_input_type_text_content(),
 		'repeater_none_field_content' => get_input_type_none_content(),
 		'repeater_radio_field_content' => get_input_type_radio_content(),
+		'repeater_toggle_field_content' => get_input_type_toggle_content(),
+		'repeater_file_field_content' => get_input_type_file_content(),
 	));
 }
 

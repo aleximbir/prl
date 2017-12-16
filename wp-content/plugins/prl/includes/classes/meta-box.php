@@ -85,11 +85,13 @@ if ( ! class_exists( 'PRL_Meta_Boxes' ) ) {
 					echo $this->field_repeater( $field );
 				}
 			}
-			
-
 		}
 		
 		public function save_meta_fields( $post_id, $post ) {
+
+			prl_print_r( $_REQUEST );
+			exit;
+
 			if (
 				! isset( $_POST['prl_cmb_nonce'] ) ||
 				! wp_verify_nonce( $_POST['prl_cmb_nonce'], plugin_basename( __FILE__ ) ) ||
