@@ -88,9 +88,65 @@ if ( ! class_exists( 'PRL_Meta_Boxes' ) ) {
 		}
 		
 		public function save_meta_fields( $post_id, $post ) {
+			$cnt = 1;
+			$j = 0;
 
-			prl_print_r( $_REQUEST );
-			exit;
+			if ( isset( $_POST['repeater-rows-count'] ) ) {
+				foreach ( $_POST['repeater-rows-count'] as $key => $value ) {
+					
+					$arrGeneral = array();
+
+					for ( $i = 0; $i < $value; $i++ ) {
+
+						$inp_type = $_POST['repeater-inp-type'][$j];
+
+						$arrGeneral[$j] = array(
+							'name'     => isset( $_POST['repeater-inp-name'][$j] ) ? $_POST['repeater-inp-name'][$j] : '',
+							'type'     => isset( $_POST['repeater-inp-type'][$j] ) ? $_POST['repeater-inp-type'][$j] : '',
+							'class'    => isset( $_POST['repeater-type-class'][$j] ) ? $_POST['repeater-type-class'][$j] : '',
+							'id'       => isset( $_POST['repeater-type-id'][$j] ) ? $_POST['repeater-type-id'][$j] : '',
+							'disabled' => isset( $_POST['repeater-type-disabled'][$j] ) ? $_POST['repeater-type-disabled'][$j] : '',
+						);
+
+						if ( $inp_type == 'text' || $inp_type == 'textarea' || $inp_type == 'wysiwyg' ) {
+							$arrGeneral[$j]['defaultValue'] = isset( $_POST['repeater-type-default-value'][$j] ) ? $_POST['repeater-type-default-value'][$j] : '';
+							$arrGeneral[$j]['palceHolder']  = isset( $_POST['repeater-type-placeholder'][$j] ) ? $_POST['repeater-type-placeholder'][$j] : '';
+							$arrGeneral[$j]['readOnly']     = isset( $_POST['repeater-type-read-only'][$j] ) ? $_POST['repeater-type-read-only'][$j] : '';
+						}
+
+						if ( $inp_type == 'radio' || $inp_type == 'checkbox' || $inp_type == 'select' ) {
+							$vArr = array();
+
+							if ( isset( $_POST['repeater-type-values'][$j] ) ) {
+								$valuesArr = explode( PHP_EOL, $_POST['repeater-type-values'][$j] );
+							
+								foreach ( $valuesArr as $v ) {
+									$vArr[] = $v;
+								}
+							}
+
+							$arrGeneral[$j]['values'] = $vArr;
+							$arrGeneral[$j]['defaultValue'] = isset( $_POST['repeater-type-default-value'][$j] ) ? $_POST['repeater-type-default-value'][$j] : '';
+						}
+
+						if ( $inp_type == 'toggle' ) {
+							$arrGeneral[$j]['description'] = isset( $_POST['repeater-type-description'][$j] ) ? $_POST['repeater-type-description'][$j] : '';
+						}
+
+						if ( $inp_type == 'file' ) {
+							$arrGeneral[$j]['fileSize'] = isset( $_POST['repeater-type-file-size'][$j] ) ? $_POST['repeater-type-file-size'][$j] : '';
+							$arrGeneral[$j]['fileType'] = isset( $_POST['repeater-type-file-type'][$j] ) ? $_POST['repeater-type-file-type'][$j] : '';
+						}
+						
+						$j++;
+					}
+
+					$rows[$cnt] = $arrGeneral;
+					$cnt++;
+				}
+
+				update_post_meta( $post->ID, 'add_new_product_page', $rows );
+			}
 
 			if (
 				! isset( $_POST['prl_cmb_nonce'] ) ||
@@ -315,6 +371,11 @@ if ( ! class_exists( 'PRL_Meta_Boxes' ) ) {
 
 		public function field_repeater( $field ) {
 			global $post;
+
+			$data = get_post_meta( $post->ID, 'add_new_product_page', true );
+			echo '<pre>';
+				print_r( $data );
+			echo '</pre>';
 
 			$field['default'] = ( isset( $field['default'] ) ) ? $field['default'] : '';
 			$value = get_post_meta( $post->ID, $field['name'], true ) != '' ? esc_attr ( get_post_meta( $post->ID, $field['name'], true ) ) : $field['default'];

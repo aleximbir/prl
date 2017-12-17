@@ -82,7 +82,22 @@ jQuery( document ).ready( function( $ ) {
 	function get_popup_content( input ) {
 		var inp_type = input.val();
 
-		var content = ''
+		var content = '';
+
+		/*var jqXHR = jQuery.ajax({
+			type: "POST",
+			url: base_prl_admin_main.ajaxurl,
+			data : {
+				action : 'get_form_field_type_content',
+				inp_type : inp_type,
+			},
+			async: false,
+			success: function( data ){
+
+			}
+		});
+
+		content = jqXHR.responseJSON;*/
 
 		if ( inp_type == 'text' || inp_type == 'textarea' || inp_type == 'wysiwyg' ) {
 			content = base_prl_admin_main.repeater_text_field_content;
@@ -98,6 +113,11 @@ jQuery( document ).ready( function( $ ) {
 
 		return content;
 	}
+
+	// Select single checkbox
+	$( document ).on( 'change', 'input[type="checkbox"]', function( e ) {
+		$( this ).siblings('input[type="checkbox"]').not(this).prop('checked', false);
+	});
 
 	// Open settings popup
 	$( document ).on( 'click', '#prl-settings-modal', function( e ) {
@@ -135,7 +155,7 @@ jQuery( document ).ready( function( $ ) {
 
 	// Populate default values
 	$( document ).on( 'change', '#repeater-type-values', function( e ) {
-		var repeater_values = $( this ).siblings( "#repeater-type-default-values" );
+		var repeater_values = $( this ).siblings( "#repeater-type-default-value" );
 		repeater_values.empty();
 
 		var values = $( this ).val().split("\n");

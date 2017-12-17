@@ -62,6 +62,16 @@ function get_repeater_fields_content( $html = '' ) {
 	return $html;
 }
 
+/*add_action( 'wp_ajax_nopriv_get_form_field_type_content', 'get_form_field_type_content' );
+add_action( 'wp_ajax_get_form_field_type_content', 'get_form_field_type_content' );
+function get_form_field_type_content( $html = '' ) {
+	$html .= '<span id="prl-close-modal" class="dashicons dashicons-no-alt"></span>';
+	$html .= '<span>' . prl_lbl( 'Please choose the type of the field!' ) . '</span>';
+
+	wp_send_json( $html );
+	wp_die();
+}*/
+
 function get_input_type_none_content( $html = '' ) {
 	$html .= '<span id="prl-close-modal" class="dashicons dashicons-no-alt"></span>';
 	$html .= '<span>' . prl_lbl( 'Please choose the type of the field!' ) . '</span>';
@@ -71,12 +81,19 @@ function get_input_type_none_content( $html = '' ) {
 
 function get_input_type_text_content( $html = '' ) {
 	$html .= '<span id="prl-close-modal" class="dashicons dashicons-no-alt"></span>';
+
+	// Hidden Values //
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-values[]' ) );
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-description[]' ) );
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-file-size[]' ) );
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-file-type[]' ) );
+	// END Hidden Values //
 	
 	$html .= prl_lbl( 'PlaceHolder', true );
 	$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-placeholder[]' ) );
 	
 	$html .= prl_lbl( 'Default Value', true );
-	$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-default-value[]' ) );
+	$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-default-value[]' ) );
 	
 	$html .= prl_lbl( 'Class', true );
 	$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-class[]' ) );
@@ -86,17 +103,17 @@ function get_input_type_text_content( $html = '' ) {
 	
 	$html .= '<div class="prl-read-only">';
 		$html .= prl_lbl( 'Read Only', true );
-		$html .= prl_form( array( 'type' => 'radio', 'name' => 'repeater-type-read-only[]', 'value' => 'yes' ) );
+		$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-read-only[]', 'value' => 'yes' ) );
 		$html .= prl_lbl( 'Yes', true, 'yes' );
-		$html .= prl_form( array( 'type' => 'radio', 'name' => 'repeater-type-read-only[]', 'value' => 'no' ) );
+		$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-read-only[]', 'value' => 'no' ) );
 		$html .= prl_lbl( 'No', true, 'no' );
 	$html .= '</div>';
 
 	$html .= '<div class="prl-disabled">';
 		$html .= prl_lbl( 'Disabled', true );
-		$html .= prl_form( array( 'type' => 'radio', 'name' => 'repeater-type-disabled[]', 'value' => 'yes' ) );
+		$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-disabled[]', 'value' => 'yes' ) );
 		$html .= prl_lbl( 'Yes', true, 'yes' );
-		$html .= prl_form( array( 'type' => 'radio', 'name' => 'repeater-type-disabled[]', 'value' => 'no' ) );
+		$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-disabled[]', 'value' => 'no' ) );
 		$html .= prl_lbl( 'No', true, 'no' );
 	$html .= '</div>';
 	
@@ -108,11 +125,19 @@ function get_input_type_text_content( $html = '' ) {
 function get_input_type_radio_content( $html = '' ) {
 	$html .= '<span id="prl-close-modal" class="dashicons dashicons-no-alt"></span>';
 
+	// Hidden Values //
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-placeholder[]' ) );
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-read-only[]' ) );
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-description[]' ) );
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-file-size[]' ) );
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-file-type[]' ) );
+	// END Hidden Values //
+
 	$html .= prl_lbl( 'Values', true );
 	$html .= prl_form( array( 'type' => 'textarea', 'name' => 'repeater-type-values[]', 'id' => 'repeater-type-values', 'placeholder' => prl_lbl( 'One value per line' ) ) );
 
 	$html .= prl_lbl( 'Default Value', true );
-	$html .= prl_form( array( 'type' => 'select', 'name' => 'repeater-type-default-values[]', 'id' => 'repeater-type-default-values' ) );
+	$html .= prl_form( array( 'type' => 'select', 'name' => 'repeater-type-default-value[]', 'id' => 'repeater-type-default-value' ) );
 
 	$html .= prl_lbl( 'Class', true );
 	$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-class[]' ) );
@@ -122,9 +147,9 @@ function get_input_type_radio_content( $html = '' ) {
 
 	$html .= '<div class="prl-disabled">';
 		$html .= prl_lbl( 'Disabled', true );
-		$html .= prl_form( array( 'type' => 'radio', 'name' => 'repeater-type-disabled[]', 'value' => 'yes' ) );
+		$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-disabled[]', 'value' => 'yes' ) );
 		$html .= prl_lbl( 'Yes', true, 'yes' );
-		$html .= prl_form( array( 'type' => 'radio', 'name' => 'repeater-type-disabled[]', 'value' => 'no' ) );
+		$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-disabled[]', 'value' => 'no' ) );
 		$html .= prl_lbl( 'No', true, 'no' );
 	$html .= '</div>';
 	
@@ -135,6 +160,15 @@ function get_input_type_radio_content( $html = '' ) {
 
 function get_input_type_toggle_content( $html = '' ) {
 	$html .= '<span id="prl-close-modal" class="dashicons dashicons-no-alt"></span>';
+
+	// Hidden Values //
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-placeholder[]' ) );
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-read-only[]' ) );
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-values[]' ) );
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-default-value[]' ) );
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-file-size[]' ) );
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-file-type[]' ) );
+	// END Hidden Values //
 	
 	$html .= prl_lbl( 'Description', true );
 	$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-description[]' ) );
@@ -147,9 +181,9 @@ function get_input_type_toggle_content( $html = '' ) {
 
 	$html .= '<div class="prl-disabled">';
 		$html .= prl_lbl( 'Disabled', true );
-		$html .= prl_form( array( 'type' => 'radio', 'name' => 'repeater-type-disabled[]', 'value' => 'yes' ) );
+		$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-disabled[]', 'value' => 'yes' ) );
 		$html .= prl_lbl( 'Yes', true, 'yes' );
-		$html .= prl_form( array( 'type' => 'radio', 'name' => 'repeater-type-disabled[]', 'value' => 'no' ) );
+		$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-disabled[]', 'value' => 'no' ) );
 		$html .= prl_lbl( 'No', true, 'no' );
 	$html .= '</div>';
 	
@@ -160,6 +194,14 @@ function get_input_type_toggle_content( $html = '' ) {
 
 function get_input_type_file_content( $html = '' ) {
 	$html .= '<span id="prl-close-modal" class="dashicons dashicons-no-alt"></span>';
+
+	// Hidden Values //
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-placeholder[]' ) );
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-read-only[]' ) );
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-values[]' ) );
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-default-value[]' ) );
+	$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-description[]' ) );
+	// END Hidden Values //
 	
 	$html .= prl_lbl( 'Max file size', true );
 	$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-file-size[]' ) );
@@ -175,11 +217,13 @@ function get_input_type_file_content( $html = '' ) {
 
 	$html .= '<div class="prl-disabled">';
 		$html .= prl_lbl( 'Disabled', true );
-		$html .= prl_form( array( 'type' => 'radio', 'name' => 'repeater-type-disabled[]', 'value' => 'yes' ) );
+		$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-disabled[]', 'value' => 'yes' ) );
 		$html .= prl_lbl( 'Yes', true, 'yes' );
-		$html .= prl_form( array( 'type' => 'radio', 'name' => 'repeater-type-disabled[]', 'value' => 'no' ) );
+		$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-disabled[]', 'value' => 'no' ) );
 		$html .= prl_lbl( 'No', true, 'no' );
 	$html .= '</div>';
+
+	$html .= '<button id="repeater-type-save" class="button button-primary button-large">' .prl_lbl( 'Save' ) . '</button>';
 
 	return $html;
 }
