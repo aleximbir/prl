@@ -158,8 +158,10 @@ if ( ! class_exists( 'PRL_Meta_Boxes' ) ) {
 			}
 
 			foreach ( $this->fields as $field ){
-				$key = $field['name'];
-				$meta_values[$key] = $_POST[$key];
+				if ( $field['type'] != 'repeater' ){
+					$key = $field['name'];
+					$meta_values[$key] = $_POST[$key];
+				}
 			}
 
 			foreach ( $meta_values as $key => $value ) {

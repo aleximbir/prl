@@ -4,7 +4,7 @@ function prl_product_meta_boxes( ){
 	$args_side = array(
 		'meta_box_id'   => 'product_meta_side',
 		'label'         => prl_lbl( 'Extra Fields' ),
-		'post_type'     => array( 'prl_products' ),
+		'post_type'     => 'page',
 		'context'       => 'side',
 		'fields'        => array(
 			array(
@@ -55,7 +55,7 @@ function prl_product_meta_boxes( ){
 	$args_after_title = array(
 		'meta_box_id'   => 'product_meta_after_title',
 		'label'         => prl_lbl( 'Subtitle' ),
-		'post_type'     => array( 'prl_products' ),
+		'post_type'     => 'page',
 		'context'       => 'after_title',
 		'fields'        => array(
 			array(
