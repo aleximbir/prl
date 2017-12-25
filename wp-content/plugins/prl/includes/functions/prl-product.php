@@ -3,43 +3,47 @@ function get_repeater_content( $id = '', $html = '' ) {
 
 	$rows = get_post_meta( $id, 'add_new_product_page', true );
 
-	if ( $rows ) {
-		foreach ( $rows as $key => $row ) {
-			$fieldscount = count( $row );
+	// New row
+	if ( !$rows ) {
+		$rows = array( '' => array() );
+	}
 
-			$html .= '<div class="repeater-row postbox" id="repeater-row">';
-				$html .= '<button type="button" class="handlediv" id="handlediv-prl-row" aria-expanded="true">';
-					$html .= '<span class="screen-reader-text">' . prl_lbl( 'Toggle panel: Repeater Fields' ) . '</span>';
-					$html .= '<span class="toggle-indicator" aria-hidden="true"></span>';
-				$html .= '</button>';
+	// Current rows
+	foreach ( $rows as $key => $row ) {
+		$fieldscount = count( $row );
 
-				$html .= '<div id="fields-count">';
+		$html .= '<div class="repeater-row postbox" id="repeater-row">';
+			$html .= '<button type="button" class="handlediv" id="handlediv-prl-row" aria-expanded="true">';
+				$html .= '<span class="screen-reader-text">' . prl_lbl( 'Toggle panel: Repeater Fields' ) . '</span>';
+				$html .= '<span class="toggle-indicator" aria-hidden="true"></span>';
+			$html .= '</button>';
 
-					$html .= '<label>' . prl_lbl( 'Fields per row' ) . ':</label>';
-					
-					$html .= '<select name="repeater-rows-count[]" id="repeater-rows-count">';
-						for ( $i=1; $i<=16; $i++ ) {
-							$selcted = ( $fieldscount == $i ) ? 'selected' : '';
-							$html .= '<option ' . $selcted . ' value="' . $i . '">' . $i . '</option>';
-						}
-					$html .= '</select>';
+			$html .= '<div id="fields-count">';
 
-					$html .= '<div class="row-name-list"><span></span></div>';
-
-					$html .= '<div class="remove-row">' . prl_lbl( 'Delete' ) . '</div>';
-
-				$html .= '</div>'; // END fields-count
+				$html .= '<label>' . prl_lbl( 'Fields per row' ) . ':</label>';
 				
-				$html .= '<div id="fields-to-repeat">';
-					
-					ob_start();
-					echo get_repeater_fields_content( $id, $row );
-					$html .= ob_get_contents();
-					ob_clean();
-					
-				$html .= '</div>'; //END fields-to-repeat
-			$html .= '</div>'; // END repeater-row
-		}
+				$html .= '<select name="repeater-rows-count[]" id="repeater-rows-count">';
+					for ( $i=1; $i<=16; $i++ ) {
+						$selcted = ( $fieldscount == $i ) ? 'selected' : '';
+						$html .= '<option ' . $selcted . ' value="' . $i . '">' . $i . '</option>';
+					}
+				$html .= '</select>';
+
+				$html .= '<div class="row-name-list"><span></span></div>';
+
+				$html .= '<div class="remove-row">' . prl_lbl( 'Delete' ) . '</div>';
+
+			$html .= '</div>'; // END fields-count
+			
+			$html .= '<div id="fields-to-repeat">';
+				
+				ob_start();
+				echo get_repeater_fields_content( $id, $row );
+				$html .= ob_get_contents();
+				ob_clean();
+				
+			$html .= '</div>'; //END fields-to-repeat
+		$html .= '</div>'; // END repeater-row
 	}
 
 	return $html;
@@ -47,6 +51,12 @@ function get_repeater_content( $id = '', $html = '' ) {
 
 function get_repeater_fields_content( $id = '', $row = array(), $html = '' ) {
 
+	// New row
+	if ( !$row ) {
+		$row = array( '' => array( 'name' => '', 'type' => '' ) );
+	}
+
+	// Current rows
 	foreach ( $row as $k => $r ) {
 
 		$html .= '<div id="field">';
@@ -89,63 +99,74 @@ function get_repeater_fields_content( $id = '', $row = array(), $html = '' ) {
 	return $html;
 }
 
+add_action( 'wp_ajax_nopriv_get_input_type_content', 'get_input_type_content' );
+add_action( 'wp_ajax_get_input_type_content', 'get_input_type_content' );
 function get_input_type_content( $r = '', $html = '' ) {
 
 	$html .= '<span id="prl-close-modal" class="dashicons dashicons-no-alt"></span>';
 
 	$inp_type = isset( $r['type'] ) ? $r['type'] : '';
+	if( !$inp_type ) $inp_type = $_POST['inp_type'];
 	
 	if ( $inp_type == 'text' || $inp_type == 'textarea' || $inp_type == 'wysiwyg' ) {
 		
 		$html .= prl_lbl( 'PlaceHolder', true );
-		$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-placeholder[]', 'value' => $r['placeHolder'] ) );
+		$phValue = isset( $r['placeHolder'] ) ? $r['placeHolder'] : '';
+		$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-placeholder[]', 'value' => $phValue ) );
 
 		$html .= prl_lbl( 'Default Value', true );
-		$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-default-value[]', 'value' => $r['defaultValue'] ) );
+		$dValue = isset( $r['defaultValue'] ) ? $r['defaultValue'] : '';
+		$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-default-value[]', 'value' => $dValue ) );
 
 	} else if ( $inp_type == 'radio' || $inp_type == 'checkbox' || $inp_type == 'select' ) {
 
 		$html .= prl_lbl( 'Values', true );
-		$html .= prl_form( array( 'type' => 'textarea', 'name' => 'repeater-type-values[]', 'id' => 'repeater-type-values', 'placeholder' => prl_lbl( 'One value per line' ), 'value' => implode( PHP_EOL, $r['values'] ) ) );
+		$vValue = isset( $r['values'] ) ? $r['values'] : '';
+		$html .= prl_form( array( 'type' => 'textarea', 'name' => 'repeater-type-values[]', 'id' => 'repeater-type-values', 'placeholder' => prl_lbl( 'One value per line' ), 'value' => implode( PHP_EOL, $vValue ) ) );
 
 		$html .= prl_lbl( 'Default Value', true );
-		$html .= prl_form( array( 'type' => 'select', 'name' => 'repeater-type-default-value[]', 'id' => 'repeater-type-default-value', 'value' => $r['defaultValue'] ) );
+		$dValue = isset( $r['defaultValue'] ) ? $r['defaultValue'] : '';
+		$html .= prl_form( array( 'type' => 'select', 'name' => 'repeater-type-default-value[]', 'id' => 'repeater-type-default-value', 'value' => $dValue ) );
 
 	} else if ( $inp_type == 'toggle' ) {
 
 		$html .= prl_lbl( 'Description', true );
-		$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-description[]', 'value' => $r['description'] ) );
+		$dValue = isset( $r['description'] ) ? $r['description'] : '';
+		$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-description[]', 'value' => $dValue ) );
 
 	} else if ( $inp_type == 'file' ) {
 
 		$html .= prl_lbl( 'Max file size', true );
-		$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-file-size[]', 'value' => $r['fileSize'] ) );
+		$fsValue = isset( $r['fileSize'] ) ? $r['fileSize'] : '';
+		$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-file-size[]', 'value' => $fsValue ) );
 
 		$html .= prl_lbl( 'Allow certain file formats', true );
-		$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-file-type[]', 'value' => $r['fileType'] ) );
+		$ftValue = isset( $r['fileType'] ) ? $r['fileType'] : '';
+		$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-file-type[]', 'value' => $ftValue ) );
 
 	} else {
-
-		$html .= '<span id="prl-close-modal" class="dashicons dashicons-no-alt"></span>';
 		$html .= '<span>' . prl_lbl( 'Please choose the type of the field!' ) . '</span>';
-
 	}
 
 	if ( $inp_type ) {
 		$html .= prl_lbl( 'Class', true );
-		$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-class[]', 'value' => $r['class'] ) );
+		$cValue = isset( $r['class'] ) ? $r['class'] : '';
+		$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-class[]', 'value' => $cValue ) );
 		
 		$html .= prl_lbl( 'ID', true );
-		$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-id[]', 'value' => $r['id'] ) );
+		$idValue = isset( $r['id'] ) ? $r['id'] : '';
+		$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-id[]', 'value' => $idValue ) );
 		
 		$html .= '<div class="prl-read-only">';
 			$html .= prl_lbl( 'Read Only', true );
 
-			$readYes = $r['disabled'] == 'yes' ? 'checked' : '';
+			$dValue = isset( $r['disabled'] ) ? $r['disabled'] : '';
+
+			$readYes = $dValue == 'yes' ? 'checked' : '';
 			$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-read-only[]', 'value' => 'yes', 'checked' => $readYes ) );
 			$html .= prl_lbl( 'Yes', true, 'yes' );
 
-			$readNo = $r['disabled'] == 'no' ? 'checked' : '';
+			$readNo = $dValue == 'no' ? 'checked' : '';
 			$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-read-only[]', 'value' => 'no', 'checked' => $readNo ) );
 			$html .= prl_lbl( 'No', true, 'no' );
 		$html .= '</div>';
@@ -153,11 +174,13 @@ function get_input_type_content( $r = '', $html = '' ) {
 		$html .= '<div class="prl-disabled">';
 			$html .= prl_lbl( 'Disabled', true );
 
-			$disabledYes = $r['readOnly'] == 'yes' ? 'checked' : '';
+			$rValue = isset( $r['readOnly'] ) ? $r['readOnly'] : '';
+
+			$disabledYes = $rValue == 'yes' ? 'checked' : '';
 			$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-disabled[]', 'value' => 'yes', 'checked' => $disabledYes ) );
 			$html .= prl_lbl( 'Yes', true, 'yes' );
 
-			$disabledNo = $r['readOnly'] == 'no' ? 'checked' : '';
+			$disabledNo = $rValue == 'no' ? 'checked' : '';
 			$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-disabled[]', 'value' => 'no', 'checked' => $disabledNo ) );
 			$html .= prl_lbl( 'No', true, 'no' );
 		$html .= '</div>';
@@ -165,5 +188,10 @@ function get_input_type_content( $r = '', $html = '' ) {
 		$html .= '<button id="repeater-type-save" class="button button-primary button-large">' .prl_lbl( 'Save' ) . '</button>';
 	}
 
-	return $html;
+	if ( isset( $_POST['inp_type'] ) ) {
+		echo $html;
+		wp_die();
+	} else {
+		return $html;
+	}
 }

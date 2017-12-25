@@ -86,19 +86,29 @@ jQuery( document ).ready( function( $ ) {
 
 	// Open settings popup
 	$( document ).on( 'click', '#prl-settings-modal', function( e ) {
-		$( this ).siblings( '.prl-popup' ).slideDown();
+		$( this ).siblings( '.prl-popup' ).slideToggle();
 	});
 
 	// Empty popup onchange
 	$( document ).on( 'change', '#repeater-inp-type', function( e ) {
 
-		var content = '';
+		$this = $( this );
 
-		$( this ).siblings( '.popup-wrapper' ).children( '.prl-popup' ).empty();
+		$this.siblings( '.popup-wrapper' ).children( '.prl-popup' ).append('<div class="loader"></div>');
 
-		if ( $( this ).siblings( '.popup-wrapper' ).children( '.prl-popup' ).css( "display" ) == "block" ) {
-			$( this ).siblings( '.popup-wrapper' ).children( '.prl-popup' ).append( $( content ) );
-		}
+		$.ajax({
+			type : "POST",
+			url : base_prl_admin_main.ajaxurl,
+			dataType : "html",
+			data : {
+				action : 'get_input_type_content',
+				inp_type : $( this ).val(),
+			},
+			success: function( data ){
+				$this.siblings( '.popup-wrapper' ).children( '.prl-popup' ).empty();
+				$this.siblings( '.popup-wrapper' ).children( '.prl-popup' ).append( data );
+			}
+		});
 	});
 
 	// Close settings popup
