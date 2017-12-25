@@ -57,9 +57,14 @@ function prl_form( $arr = '' ) {
 			$ret .= ' class="' . $class . '"';
 		}
 
-		if (  $type != 'textarea' && $type != 'select' ) {
+		if ( $type != 'textarea' && $type != 'select' ) {
 			$value = isset( $value ) ? $value : '';
 			$ret .= ' value="' . $value . '"';
+		}
+
+		if ( $type == 'radio' || $type == 'checkbox' ) {
+			$checked = isset( $checked ) ? $checked : '';
+			$ret .= ' ' . $checked;
 		}
 
 		if ( $type != 'select' && isset( $placeholder ) ) {

@@ -90,6 +90,7 @@ function get_repeater_fields_content( $id = '', $row = array(), $html = '' ) {
 }
 
 function get_input_type_content( $r = '', $html = '' ) {
+
 	$html .= '<span id="prl-close-modal" class="dashicons dashicons-no-alt"></span>';
 
 	$inp_type = isset( $r['type'] ) ? $r['type'] : '';
@@ -105,7 +106,7 @@ function get_input_type_content( $r = '', $html = '' ) {
 	} else if ( $inp_type == 'radio' || $inp_type == 'checkbox' || $inp_type == 'select' ) {
 
 		$html .= prl_lbl( 'Values', true );
-		$html .= prl_form( array( 'type' => 'textarea', 'name' => 'repeater-type-values[]', 'id' => 'repeater-type-values', 'placeholder' => prl_lbl( 'One value per line' ) ) );
+		$html .= prl_form( array( 'type' => 'textarea', 'name' => 'repeater-type-values[]', 'id' => 'repeater-type-values', 'placeholder' => prl_lbl( 'One value per line' ), 'value' => implode( PHP_EOL, $r['values'] ) ) );
 
 		$html .= prl_lbl( 'Default Value', true );
 		$html .= prl_form( array( 'type' => 'select', 'name' => 'repeater-type-default-value[]', 'id' => 'repeater-type-default-value', 'value' => $r['defaultValue'] ) );
@@ -139,17 +140,25 @@ function get_input_type_content( $r = '', $html = '' ) {
 		
 		$html .= '<div class="prl-read-only">';
 			$html .= prl_lbl( 'Read Only', true );
-			$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-read-only[]', 'value' => 'yes' ) );
+
+			$readYes = $r['disabled'] == 'yes' ? 'checked' : '';
+			$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-read-only[]', 'value' => 'yes', 'checked' => $readYes ) );
 			$html .= prl_lbl( 'Yes', true, 'yes' );
-			$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-read-only[]', 'value' => 'no' ) );
+
+			$readNo = $r['disabled'] == 'no' ? 'checked' : '';
+			$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-read-only[]', 'value' => 'no', 'checked' => $readNo ) );
 			$html .= prl_lbl( 'No', true, 'no' );
 		$html .= '</div>';
 
 		$html .= '<div class="prl-disabled">';
 			$html .= prl_lbl( 'Disabled', true );
-			$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-disabled[]', 'value' => 'yes' ) );
+
+			$disabledYes = $r['readOnly'] == 'yes' ? 'checked' : '';
+			$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-disabled[]', 'value' => 'yes', 'checked' => $disabledYes ) );
 			$html .= prl_lbl( 'Yes', true, 'yes' );
-			$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-disabled[]', 'value' => 'no' ) );
+
+			$disabledNo = $r['readOnly'] == 'no' ? 'checked' : '';
+			$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-disabled[]', 'value' => 'no', 'checked' => $disabledNo ) );
 			$html .= prl_lbl( 'No', true, 'no' );
 		$html .= '</div>';
 		
