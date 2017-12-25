@@ -62,8 +62,6 @@ function get_repeater_fields_content( $id = '', $row = array(), $html = '' ) {
 		$html .= '<div id="field">';
 			$html .= '<input type="text" placeHolder="' . prl_lbl( 'Name' ) . '" name="repeater-inp-name[]" value="' . $r['name'] . '" />';
 
-			$html .= '&nbsp';
-
 			$types = array(
 				'' => prl_lbl( 'Type' ),
 				'text' => prl_lbl( 'Text' ),
@@ -106,7 +104,7 @@ function get_input_type_content( $r = '', $html = '' ) {
 	$html .= '<span id="prl-close-modal" class="dashicons dashicons-no-alt"></span>';
 
 	$inp_type = isset( $r['type'] ) ? $r['type'] : '';
-	if( !$inp_type ) $inp_type = $_POST['inp_type'];
+	if( !$inp_type ) { $inp_type = isset( $_POST['inp_type'] ) ? $_POST['inp_type'] : ''; }
 	
 	if ( $inp_type == 'text' || $inp_type == 'textarea' || $inp_type == 'wysiwyg' ) {
 		

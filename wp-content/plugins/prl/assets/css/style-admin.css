@@ -13,6 +13,7 @@
 }
 .repeater-wrapper select#repeater-rows-count {
 	margin: 10px;
+	box-shadow: 2px 3px 10px #f1f2f3;
 }
 .repeater-wrapper .repeater-row {
 	margin: 15px auto;
@@ -34,11 +35,11 @@
 	position: relative;
 }
 .repeater-wrapper #fields-count {
-	box-shadow: 2px 3px 10px #888888;
+	box-shadow: 2px 3px 10px #f1f2f3;
 	padding-left: 20px;
 }
 .repeater-wrapper #fields-to-repeat {
-	box-shadow: 2px 3px 10px #888888;
+	box-shadow: 2px 3px 10px #f1f2f3;
 	padding: 20px;
 }
 .repeater-wrapper .toggle-indicator-up {
@@ -109,7 +110,7 @@
 }
 #repeater-new-row {
 	margin-top: 10px;
-	box-shadow: 2px 3px 10px #888888;
+	box-shadow: 2px 3px 10px #f1f2f3;
 }
 .repeater-wrapper .popup-wrapper .prl-read-only .yes {
 	display: inline;
@@ -129,8 +130,8 @@
 
 /*** LOADER ***/
 .loader {
-	border: 8px solid #f3f3f3;
-	border-top: 8px solid #3498db;
+	border: 8px solid #f1f2f3;
+	border-top: 8px solid #0085ba;
 	border-radius: 50%;
 	width: 20px;
 	height: 20px;

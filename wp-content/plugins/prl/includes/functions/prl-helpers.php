@@ -57,8 +57,9 @@ function prl_form( $arr = '' ) {
 			$ret .= ' class="' . $class . '"';
 		}
 
+		$value = isset( $value ) ? $value : '';
+
 		if ( $type != 'textarea' && $type != 'select' ) {
-			$value = isset( $value ) ? $value : '';
 			$ret .= ' value="' . $value . '"';
 		}
 
@@ -72,10 +73,13 @@ function prl_form( $arr = '' ) {
 		}
 
 		if ( $type == 'textarea' ) {
-			$value = isset( $value ) ? $value : '';
 			$ret .= '>' . $value . '</textarea>';
 		} elseif( $type == 'select' ) {
-			$ret .= '></select>';
+			$ret .= '>';
+			if ( $value ){
+				$ret .= '<option>' . $value . '</option>';
+			}
+			$ret .= '</select>';
 		} else {
 			$ret .= ' />';
 		}
