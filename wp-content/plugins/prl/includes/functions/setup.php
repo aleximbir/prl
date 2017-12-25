@@ -29,15 +29,10 @@ function prl_load_admin_scripts_and_styles() {
 	wp_enqueue_style( 'main-admin-style', plugins_url( '/assets/css/style-admin.css', PRL_PLUGIN_FILE ), prl_VERSION );
 	wp_enqueue_script( 'main-admin-js', plugins_url( '/assets/js/script-admin.js', PRL_PLUGIN_FILE ), array( 'jquery' ), prl_VERSION );
 	wp_localize_script( 'main-admin-js', 'base_prl_admin_main', array(
-		'theme_path' => get_template_directory_uri(),
-		'ajaxurl' => admin_url( 'admin-ajax.php' ),
-		'repeater_content' => get_repeater_content(),
+		'theme_path'             => get_template_directory_uri(),
+		'ajaxurl'                => admin_url( 'admin-ajax.php' ),
+		'repeater_content'       => get_repeater_content(),
 		'repeater_field_content' => get_repeater_fields_content(),
-		'repeater_text_field_content' => get_input_type_text_content(),
-		'repeater_none_field_content' => get_input_type_none_content(),
-		'repeater_radio_field_content' => get_input_type_radio_content(),
-		'repeater_toggle_field_content' => get_input_type_toggle_content(),
-		'repeater_file_field_content' => get_input_type_file_content(),
 	));
 }
 

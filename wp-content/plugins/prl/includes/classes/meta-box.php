@@ -110,7 +110,7 @@ if ( ! class_exists( 'PRL_Meta_Boxes' ) ) {
 
 						if ( $inp_type == 'text' || $inp_type == 'textarea' || $inp_type == 'wysiwyg' ) {
 							$arrGeneral[$j]['defaultValue'] = isset( $_POST['repeater-type-default-value'][$j] ) ? $_POST['repeater-type-default-value'][$j] : '';
-							$arrGeneral[$j]['palceHolder']  = isset( $_POST['repeater-type-placeholder'][$j] ) ? $_POST['repeater-type-placeholder'][$j] : '';
+							$arrGeneral[$j]['placeHolder']  = isset( $_POST['repeater-type-placeholder'][$j] ) ? $_POST['repeater-type-placeholder'][$j] : '';
 							$arrGeneral[$j]['readOnly']     = isset( $_POST['repeater-type-read-only'][$j] ) ? $_POST['repeater-type-read-only'][$j] : '';
 						}
 
@@ -374,11 +374,6 @@ if ( ! class_exists( 'PRL_Meta_Boxes' ) ) {
 		public function field_repeater( $field ) {
 			global $post;
 
-			$data = get_post_meta( $post->ID, 'add_new_product_page', true );
-			echo '<pre>';
-				print_r( $data );
-			echo '</pre>';
-
 			$field['default'] = ( isset( $field['default'] ) ) ? $field['default'] : '';
 			$value = get_post_meta( $post->ID, $field['name'], true ) != '' ? esc_attr ( get_post_meta( $post->ID, $field['name'], true ) ) : $field['default'];
 			$class  = isset( $field['class'] ) && ! is_null( $field['class'] ) ? $field['class'] : 'prl-meta-field';
@@ -391,7 +386,7 @@ if ( ! class_exists( 'PRL_Meta_Boxes' ) ) {
 				}
 				$html .= '<div class="repeater-wrapper">';
 					ob_start();
-					echo get_repeater_content();
+					echo get_repeater_content( $post->ID );
 					$html .= ob_get_contents();
 					ob_clean();
 				$html .= '</div>'; // END repeater-wrapper

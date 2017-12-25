@@ -79,41 +79,6 @@ jQuery( document ).ready( function( $ ) {
 		$( this ).parent().parent().siblings( '#fields-count' ).children( '.row-name-list' ).children( 'span' ).eq(input_index).text( $( this ).val() + '; ' );
 	});
 
-	function get_popup_content( input ) {
-		var inp_type = input.val();
-
-		var content = '';
-
-		/*var jqXHR = jQuery.ajax({
-			type: "POST",
-			url: base_prl_admin_main.ajaxurl,
-			data : {
-				action : 'get_form_field_type_content',
-				inp_type : inp_type,
-			},
-			async: false,
-			success: function( data ){
-
-			}
-		});
-
-		content = jqXHR.responseJSON;*/
-
-		if ( inp_type == 'text' || inp_type == 'textarea' || inp_type == 'wysiwyg' ) {
-			content = base_prl_admin_main.repeater_text_field_content;
-		} else if ( inp_type == 'radio' || inp_type == 'checkbox' || inp_type == 'select' ) {
-			content = base_prl_admin_main.repeater_radio_field_content;
-		} else if ( inp_type == 'toggle' ) {
-			content = base_prl_admin_main.repeater_toggle_field_content;
-		} else if ( inp_type == 'file' ) {
-			content = base_prl_admin_main.repeater_file_field_content;
-		} else {
-			content = base_prl_admin_main.repeater_none_field_content;
-		}
-
-		return content;
-	}
-
 	// Select single checkbox
 	$( document ).on( 'change', 'input[type="checkbox"]', function( e ) {
 		$( this ).siblings('input[type="checkbox"]').not(this).prop('checked', false);
@@ -121,21 +86,13 @@ jQuery( document ).ready( function( $ ) {
 
 	// Open settings popup
 	$( document ).on( 'click', '#prl-settings-modal', function( e ) {
-
-		var content = get_popup_content( $( this ).parent().siblings( '#repeater-inp-type' ) );
-
-		if( $( this ).siblings( '.prl-popup' ).is(':empty') ) {
-			$( this ).siblings( '.prl-popup' ).append( $( content ) );
-		}
-
 		$( this ).siblings( '.prl-popup' ).slideDown();
-		
 	});
 
 	// Empty popup onchange
 	$( document ).on( 'change', '#repeater-inp-type', function( e ) {
 
-		var content = get_popup_content( $( this ) );
+		var content = '';
 
 		$( this ).siblings( '.popup-wrapper' ).children( '.prl-popup' ).empty();
 
