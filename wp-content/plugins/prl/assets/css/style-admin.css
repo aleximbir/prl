@@ -112,18 +112,15 @@
 	margin-top: 10px;
 	box-shadow: 2px 3px 10px #f1f2f3;
 }
-.repeater-wrapper .popup-wrapper .prl-read-only .yes {
+.repeater-wrapper .popup-wrapper .prl-read-only .yes,
+.repeater-wrapper .popup-wrapper .prl-disabled .yes,
+.repeater-wrapper .popup-wrapper .prl-extra-price .yes {
 	display: inline;
 	margin-right: 20px;
 }
-.repeater-wrapper .popup-wrapper .prl-read-only .no {
-	display: inline;
-}
-.repeater-wrapper .popup-wrapper .prl-disabled .yes {
-	display: inline;
-	margin-right: 20px;
-}
-.repeater-wrapper .popup-wrapper .prl-disabled .no {
+.repeater-wrapper .popup-wrapper .prl-read-only .no,
+.repeater-wrapper .popup-wrapper .prl-disabled .no,
+.repeater-wrapper .popup-wrapper .prl-extra-price .no {
 	display: inline;
 }
 /*** END ADD NEW PRODUCT ***/

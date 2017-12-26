@@ -237,6 +237,32 @@ function get_input_type_content( $r = '', $html = '' ) {
 			$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-disabled[]', 'value' => 'no', 'checked' => $disabledNo ) );
 			$html .= prl_lbl( 'No', true, 'no' );
 		$html .= '</div>';
+
+		$html .= '<div class="prl-extra-price">';
+			$html .= prl_lbl( 'Field with extra price', true );
+
+			$epValue = isset( $r['extra_price'] ) ? $r['extra_price'] : '';
+
+			$extraPriceYes = $epValue == 'yes' ? 'checked' : '';
+			$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-extra-price[]', 'class' => 'extra-price-chk', 'value' => 'yes', 'checked' => $extraPriceYes ) );
+			$html .= prl_lbl( 'Yes', true, 'yes' );
+
+			$extraPriceNo = $epValue == 'no' ? 'checked' : '';
+			$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-extra-price[]', 'class' => 'extra-price-chk', 'value' => 'no', 'checked' => $extraPriceNo ) );
+			$html .= prl_lbl( 'No', true, 'no' );
+
+			$display_extra_price = $epValue == 'yes' ? 'block' : 'none';
+
+			$html .= '<div class="prl-extra-price-wrapper" style="display: ' . $display_extra_price . ';">';
+				$html .= prl_lbl( 'Description', true );
+				$epdValue = isset( $r['ep_description'] ) ? $r['ep_description'] : '';
+				$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-ep-description[]', 'value' => $epdValue ) );
+
+				$html .= prl_lbl( 'Price', true );
+				$eppValue = isset( $r['ep_price'] ) ? $r['ep_price'] : '';
+				$html .= prl_form( array( 'type' => 'number', 'name' => 'repeater-type-ep-price[]', 'value' => $eppValue ) );
+			$html .= '</div>';
+		$html .= '</div>';
 		
 		$html .= '<button id="repeater-type-save" class="button button-primary button-large">' .prl_lbl( 'Save' ) . '</button>';
 	}

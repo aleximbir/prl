@@ -101,12 +101,16 @@ if ( ! class_exists( 'PRL_Meta_Boxes' ) ) {
 						$inp_type = $_POST['repeater-inp-type'][$j];
 
 						$arrGeneral[$j] = array(
-							'name'     => isset( $_POST['repeater-inp-name'][$j] ) ? $_POST['repeater-inp-name'][$j] : '',
-							'type'     => isset( $_POST['repeater-inp-type'][$j] ) ? $_POST['repeater-inp-type'][$j] : '',
-							'class'    => isset( $_POST['repeater-type-class'][$j] ) ? $_POST['repeater-type-class'][$j] : '',
-							'id'       => isset( $_POST['repeater-type-id'][$j] ) ? $_POST['repeater-type-id'][$j] : '',
-							'disabled' => isset( $_POST['repeater-type-disabled'][$j] ) ? $_POST['repeater-type-disabled'][$j] : '',
-							'readOnly' => isset( $_POST['repeater-type-read-only'][$j] ) ? $_POST['repeater-type-read-only'][$j] : '',
+							'name'           => isset( $_POST['repeater-inp-name'][$j] ) ? $_POST['repeater-inp-name'][$j] : '',
+							'type'           => isset( $_POST['repeater-inp-type'][$j] ) ? $_POST['repeater-inp-type'][$j] : '',
+							'class'          => isset( $_POST['repeater-type-class'][$j] ) ? $_POST['repeater-type-class'][$j] : '',
+							'id'             => isset( $_POST['repeater-type-id'][$j] ) ? $_POST['repeater-type-id'][$j] : '',
+							'disabled'       => isset( $_POST['repeater-type-disabled'][$j] ) ? $_POST['repeater-type-disabled'][$j] : '',
+							'readOnly'       => isset( $_POST['repeater-type-read-only'][$j] ) ? $_POST['repeater-type-read-only'][$j] : '',
+							'extra_price'    => isset( $_POST['repeater-extra-price'][$j] ) ? $_POST['repeater-extra-price'][$j] : '',
+							'extra_price'    => isset( $_POST['repeater-extra-price'][$j] ) ? $_POST['repeater-extra-price'][$j] : '',
+							'ep_description' => isset( $_POST['repeater-type-ep-description'][$j] ) ? $_POST['repeater-type-ep-description'][$j] : '',
+							'ep_price'       => isset( $_POST['repeater-type-ep-price'][$j] ) ? $_POST['repeater-type-ep-price'][$j] : '',
 						);
 
 						if ( $inp_type == 'text' || $inp_type == 'textarea' || $inp_type == 'wysiwyg' ) {

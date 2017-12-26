@@ -142,6 +142,16 @@ jQuery( document ).ready( function( $ ) {
 		});
 	});
 
+	// Show extra price wrapper
+	$( document ).on( 'change', '.extra-price-chk', function( e ) {
+		$val = $( this ).val();
+		if ( $val == 'yes' ) {
+			$( this ).siblings( '.prl-extra-price-wrapper' ).slideDown();
+		} else {
+			$( this ).siblings( '.prl-extra-price-wrapper' ).slideUp();
+		}
+	});
+
 /*** END PRODUCTS ***/
 
 });
