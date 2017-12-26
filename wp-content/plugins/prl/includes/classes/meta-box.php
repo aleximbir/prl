@@ -106,12 +106,12 @@ if ( ! class_exists( 'PRL_Meta_Boxes' ) ) {
 							'class'    => isset( $_POST['repeater-type-class'][$j] ) ? $_POST['repeater-type-class'][$j] : '',
 							'id'       => isset( $_POST['repeater-type-id'][$j] ) ? $_POST['repeater-type-id'][$j] : '',
 							'disabled' => isset( $_POST['repeater-type-disabled'][$j] ) ? $_POST['repeater-type-disabled'][$j] : '',
+							'readOnly' => isset( $_POST['repeater-type-read-only'][$j] ) ? $_POST['repeater-type-read-only'][$j] : '',
 						);
 
 						if ( $inp_type == 'text' || $inp_type == 'textarea' || $inp_type == 'wysiwyg' ) {
 							$arrGeneral[$j]['defaultValue'] = isset( $_POST['repeater-type-default-value'][$j] ) ? $_POST['repeater-type-default-value'][$j] : '';
 							$arrGeneral[$j]['placeHolder']  = isset( $_POST['repeater-type-placeholder'][$j] ) ? $_POST['repeater-type-placeholder'][$j] : '';
-							$arrGeneral[$j]['readOnly']     = isset( $_POST['repeater-type-read-only'][$j] ) ? $_POST['repeater-type-read-only'][$j] : '';
 						}
 
 						if ( $inp_type == 'radio' || $inp_type == 'checkbox' || $inp_type == 'select' ) {

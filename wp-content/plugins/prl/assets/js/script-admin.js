@@ -1,6 +1,13 @@
 jQuery( document ).ready( function( $ ) {
 
 /*** PRODUCTS ***/
+	
+	// Complete with row name on page load
+	$( '.repeater-row' ).each( function() {
+		$( this ).children( '#fields-to-repeat' ).children( '#field' ).children( 'input' ).each( function() {
+			$( this ).parent().parent().siblings( '#fields-count' ).children( '.row-name-list' ).append( '<span>' + $( this ).val() + '; </span>' );
+		});
+	});
 
 	// Add New Row
 	var i = 1;
@@ -19,7 +26,7 @@ jQuery( document ).ready( function( $ ) {
 	});
 
 	// Add Fields In Row
-	$( document ).on( 'change', '#repeater-rows-count', function( e ) { 
+	$( document ).on( 'change load', '#repeater-rows-count', function( e ) { 
 		e.preventDefault();
 
 		span = $( this ).siblings( '.row-name-list' ).find('span');
@@ -121,11 +128,13 @@ jQuery( document ).ready( function( $ ) {
 	});
 
 	// Populate default values
-	$( document ).on( 'change', '#repeater-type-values', function( e ) {
-		var repeater_values = $( this ).siblings( "#repeater-type-default-value" );
+	$( document ).on( 'click', '#repeater-type-default-value', function( e ) {
+		e.preventDefault();
+
+		var repeater_values = $( this );
 		repeater_values.empty();
 
-		var values = $( this ).val().split("\n");
+		var values = $( this ).siblings( "#repeater-type-values" ).val().split("\n");
 		$.each( values, function( index, value ) {
 			value_formatted = value.replace(/ /g,"_");
 			value_formatted = value_formatted.toLowerCase();

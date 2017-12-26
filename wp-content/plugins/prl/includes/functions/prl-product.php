@@ -97,6 +97,33 @@ function get_repeater_fields_content( $id = '', $row = array(), $html = '' ) {
 	return $html;
 }
 
+function complete_with_hidden_inputs( $inp_type = '', $html = '' ) {
+	if ( $inp_type == 'text' || $inp_type == 'textarea' || $inp_type == 'wysiwyg' ) {
+		$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-values[]' ) );
+		$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-description[]' ) );
+		$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-file-size[]' ) );
+		$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-file-type[]' ) );
+	} else if ( $inp_type == 'radio' || $inp_type == 'checkbox' || $inp_type == 'select' ) {
+		$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-placeholder[]' ) );
+		$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-description[]' ) );
+		$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-file-size[]' ) );
+		$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-file-type[]' ) );
+	} else if ( $inp_type == 'toggle' ) {
+		$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-placeholder[]' ) );
+		$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-values[]' ) );
+		$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-default-value[]' ) );
+		$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-file-size[]' ) );
+		$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-file-type[]' ) );
+	} else if ( $inp_type == 'file' ) {
+		$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-placeholder[]' ) );
+		$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-values[]' ) );
+		$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-default-value[]' ) );
+		$html .= prl_form( array( 'type' => 'hidden', 'name' => 'repeater-type-description[]' ) );
+	}
+
+	return $html;
+}
+
 add_action( 'wp_ajax_nopriv_get_input_type_content', 'get_input_type_content' );
 add_action( 'wp_ajax_get_input_type_content', 'get_input_type_content' );
 function get_input_type_content( $r = '', $html = '' ) {
@@ -116,6 +143,13 @@ function get_input_type_content( $r = '', $html = '' ) {
 		$dValue = isset( $r['defaultValue'] ) ? $r['defaultValue'] : '';
 		$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-default-value[]', 'value' => $dValue ) );
 
+		// Hidden Values //
+		ob_start();
+		echo complete_with_hidden_inputs( $inp_type );
+		$html .= ob_get_contents();
+		ob_clean();
+		// END Hidden Values //
+
 	} else if ( $inp_type == 'radio' || $inp_type == 'checkbox' || $inp_type == 'select' ) {
 
 		$html .= prl_lbl( 'Values', true );
@@ -126,11 +160,25 @@ function get_input_type_content( $r = '', $html = '' ) {
 		$dValue = isset( $r['defaultValue'] ) ? $r['defaultValue'] : '';
 		$html .= prl_form( array( 'type' => 'select', 'name' => 'repeater-type-default-value[]', 'id' => 'repeater-type-default-value', 'value' => $dValue ) );
 
+		// Hidden Values //
+		ob_start();
+		echo complete_with_hidden_inputs( $inp_type );
+		$html .= ob_get_contents();
+		ob_clean();
+		// END Hidden Values //
+
 	} else if ( $inp_type == 'toggle' ) {
 
 		$html .= prl_lbl( 'Description', true );
 		$dValue = isset( $r['description'] ) ? $r['description'] : '';
 		$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-description[]', 'value' => $dValue ) );
+
+		// Hidden Values //
+		ob_start();
+		echo complete_with_hidden_inputs( $inp_type );
+		$html .= ob_get_contents();
+		ob_clean();
+		// END Hidden Values //
 
 	} else if ( $inp_type == 'file' ) {
 
@@ -141,6 +189,13 @@ function get_input_type_content( $r = '', $html = '' ) {
 		$html .= prl_lbl( 'Allow certain file formats', true );
 		$ftValue = isset( $r['fileType'] ) ? $r['fileType'] : '';
 		$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-type-file-type[]', 'value' => $ftValue ) );
+
+		// Hidden Values //
+		ob_start();
+		echo complete_with_hidden_inputs( $inp_type );
+		$html .= ob_get_contents();
+		ob_clean();
+		// END Hidden Values //
 
 	} else {
 		$html .= '<span>' . prl_lbl( 'Please choose the type of the field!' ) . '</span>';
@@ -158,7 +213,7 @@ function get_input_type_content( $r = '', $html = '' ) {
 		$html .= '<div class="prl-read-only">';
 			$html .= prl_lbl( 'Read Only', true );
 
-			$dValue = isset( $r['disabled'] ) ? $r['disabled'] : '';
+			$dValue = isset( $r['readOnly'] ) ? $r['readOnly'] : '';
 
 			$readYes = $dValue == 'yes' ? 'checked' : '';
 			$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-read-only[]', 'value' => 'yes', 'checked' => $readYes ) );
@@ -172,7 +227,7 @@ function get_input_type_content( $r = '', $html = '' ) {
 		$html .= '<div class="prl-disabled">';
 			$html .= prl_lbl( 'Disabled', true );
 
-			$rValue = isset( $r['readOnly'] ) ? $r['readOnly'] : '';
+			$rValue = isset( $r['disabled'] ) ? $r['disabled'] : '';
 
 			$disabledYes = $rValue == 'yes' ? 'checked' : '';
 			$html .= prl_form( array( 'type' => 'checkbox', 'name' => 'repeater-type-disabled[]', 'value' => 'yes', 'checked' => $disabledYes ) );
