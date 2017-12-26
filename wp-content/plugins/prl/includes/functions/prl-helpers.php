@@ -57,6 +57,10 @@ function prl_form( $arr = '' ) {
 			$ret .= ' class="' . $class . '"';
 		}
 
+		if ( isset( $required ) && $required == 'yes' ) {
+			$ret .= ' required';
+		}
+
 		$value = isset( $value ) ? $value : '';
 
 		if ( $type != 'textarea' && $type != 'select' ) {

@@ -60,7 +60,7 @@ function get_repeater_fields_content( $id = '', $row = array(), $html = '' ) {
 	foreach ( $row as $k => $r ) {
 
 		$html .= '<div id="field">';
-			$html .= '<input type="text" placeHolder="' . prl_lbl( 'Name' ) . '" name="repeater-inp-name[]" value="' . $r['name'] . '" />';
+			$html .= prl_form( array( 'type' => 'text', 'name' => 'repeater-inp-name[]', 'id' => 'repeater-inp-name', 'placeholder' => prl_lbl( 'Name' ), 'value' => $r['name'], 'required' => 'yes' ) );
 
 			$types = array(
 				'' => prl_lbl( 'Type' ),
@@ -74,7 +74,7 @@ function get_repeater_fields_content( $id = '', $row = array(), $html = '' ) {
 				'wysiwyg' => prl_lbl( 'WYSIWYG' ),
 			);
 
-			$html .= '<select name="repeater-inp-type[]" id="repeater-inp-type">';
+			$html .= '<select name="repeater-inp-type[]" id="repeater-inp-type" required>';
 				foreach ( $types as $key => $type ) {
 					$selected = ( $key == $r['type'] ) ? 'selected' : '';
 					$html .= '<option ' . $selected . ' value="' . $key . '">' . $type . '</option>';

@@ -5,7 +5,7 @@ jQuery( document ).ready( function( $ ) {
 	// Complete with row name on page load
 	$( '.repeater-row' ).each( function() {
 		$( this ).children( '#fields-to-repeat' ).children( '#field' ).children( 'input' ).each( function() {
-			$( this ).parent().parent().siblings( '#fields-count' ).children( '.row-name-list' ).append( '<span>' + $( this ).val() + '; </span>' );
+			$( this ).parent().parent().siblings( '#fields-count' ).children( '.row-name-list' ).children( 'span' ).append( $( this ).val() + '; ' );
 		});
 	});
 
