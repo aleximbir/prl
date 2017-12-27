@@ -1,13 +1,6 @@
 jQuery( document ).ready( function( $ ) {
 
 /*** PRODUCTS ***/
-	
-	// Complete with row name on page load
-	$( '.repeater-row' ).each( function() {
-		$( this ).children( '#fields-to-repeat' ).children( '#field' ).children( 'input' ).each( function() {
-			$( this ).parent().parent().siblings( '#fields-count' ).children( '.row-name-list' ).children( 'span' ).append( $( this ).val() + '; ' );
-		});
-	});
 
 	// Add New Row
 	var i = 1;
@@ -77,6 +70,20 @@ jQuery( document ).ready( function( $ ) {
 
 		$( this ).parent().parent().slideUp( 500, function() {
 			$( this ).remove();
+		});
+	});
+
+	// Change row order
+	$( ".repeater-wrapper" ).sortable();
+	$( ".repeater-wrapper" ).disableSelection();
+
+	$( "#fields-to-repeat" ).sortable();
+	$( "#fields-to-repeat" ).disableSelection();
+
+	// Complete with row name on page load
+	$( '.repeater-row' ).each( function() {
+		$( this ).children( '#fields-to-repeat' ).children( '#field' ).children( 'input' ).each( function() {
+			$( this ).parent().parent().siblings( '#fields-count' ).children( '.row-name-list' ).children( 'span' ).append( $( this ).val() + '; ' );
 		});
 	});
 

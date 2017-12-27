@@ -37,6 +37,7 @@
 .repeater-wrapper #fields-count {
 	box-shadow: 2px 3px 10px #f1f2f3;
 	padding-left: 20px;
+	cursor: move;
 }
 .repeater-wrapper #fields-to-repeat {
 	box-shadow: 2px 3px 10px #f1f2f3;
@@ -64,7 +65,8 @@
 	position: relative;
 	display: inline;
 }
-.repeater-wrapper #prl-settings-modal {
+.repeater-wrapper #prl-settings-modal,
+.repeater-wrapper #prl-move {
 	margin-top: 1px;
 	border: 1px solid #c0c0c0;
 	margin-left: 5px;
@@ -73,6 +75,9 @@
 	line-height: 33px;
 	text-align: center;
 	cursor: pointer;
+}
+.repeater-wrapper #prl-move {
+	cursor: move;
 }
 .repeater-wrapper .prl-popup {
 	border: 1px solid #c0c0c0;

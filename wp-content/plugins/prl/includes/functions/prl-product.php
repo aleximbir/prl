@@ -90,6 +90,8 @@ function get_repeater_fields_content( $id = '', $row = array(), $html = '' ) {
 					ob_clean();
 				$html .= '</div>';
 			$html .= '</div>';
+
+			$html .= '<span id="prl-move" class="dashicons dashicons-move"></span>';
 		$html .= '</div>';
 
 	}
