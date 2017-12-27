@@ -10,23 +10,62 @@
 				<div class="<?php echo $fieldscount; ?> column row">
 					
 					<?php if ( $row ) {
-						foreach ( $row as $k => $r ) { ?>
-							
-							<div class="column field">
-								<label><?php echo $r['name']; ?></label>
-								<?php echo prl_form(
-									array(
-										'type' => $r['type'],
-										'name' => $r['type'] . '_' . prl_replace( strtolower( $r['name'] ), ' ', '_' ),
-										'class' => $r['class'],
-										'id' => $r['id'],
-										'placeholder' => $r['placeHolder'],
-										'value' => $r['defaultValue'],
-										'disabled' => $r['disabled'],
-										'readonly' => $r['readOnly']
-									)
-								);
+						foreach ( $row as $k => $r ) {
+							$inp_type = $r['type']; ?>
 
+							<div class="column field">
+								<label><?php echo ucfirst( $r['name'] ); ?></label>
+								<?php 
+								if ( $inp_type == 'text' || $inp_type == 'textarea' || $inp_type == 'wysiwyg' ) {
+									echo prl_form(
+										array(
+											'type' => $r['type'],
+											'name' => $r['type'] . '_' . prl_replace( strtolower( $r['name'] ), ' ', '_' ),
+											'class' => $r['class'],
+											'id' => $r['id'],
+											'placeholder' => $r['placeHolder'],
+											'value' => $r['defaultValue'],
+											'disabled' => $r['disabled'],
+											'readonly' => $r['readOnly']
+										)
+									);
+								} else if ( $inp_type == 'radio' || $inp_type == 'checkbox' ) {
+									if ( isset( $r['values'] ) ) {
+										if ( is_array( $r['values'] ) ) {
+											foreach ( $r['values'] as $key => $value ) {
+												echo prl_form(
+													array(
+														'type' => $r['type'],
+														'name' => $r['type'] . '_' . prl_replace( strtolower( $r['name'] ), ' ', '_' ),
+														'class' => $r['class'],
+														'id' => $r['id'],
+														'value' => $value,
+														'disabled' => $r['disabled'],
+														'readonly' => $r['readOnly']
+													)
+												);
+												echo prl_lbl( $value );
+											}
+										}
+									}
+								} else if ( $inp_type == 'select' ) {
+									echo prl_form(
+										array(
+											'type' => $r['type'],
+											'name' => $r['type'] . '_' . prl_replace( strtolower( $r['name'] ), ' ', '_' ),
+											'class' => $r['class'],
+											'id' => $r['id'],
+											'value' => $r['values'],
+											'disabled' => $r['disabled'],
+											'readonly' => $r['readOnly']
+										)
+									);
+								} else if ( $inp_type == 'toggle' ) {
+
+								} else if ( $inp_type == 'file' ) {
+
+								}
+								
 								if ( $r['extra_price'] == 'yes' ) { ?>
 									<div class="ui toggle checkbox">
 										<?php echo prl_form( array( 'type' => 'checkbox', 'name' => 'chk_bold_title', 'class' => 'hidden' ) ); ?>

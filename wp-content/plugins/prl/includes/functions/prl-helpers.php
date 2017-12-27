@@ -88,8 +88,15 @@ function prl_form( $arr = '' ) {
 			$ret .= '>' . $value . '</textarea>';
 		} elseif( $type == 'select' ) {
 			$ret .= '>';
+
 			if ( $value ){
-				$ret .= '<option>' . $value . '</option>';
+				if ( is_array( $value ) ) {
+					foreach ( $value as $key => $val ) {
+						$ret .= '<option>' . $val . '</option>';
+					}
+				} else {
+					$ret .= '<option>' . $value . '</option>';
+				}
 			}
 			$ret .= '</select>';
 		} else {
