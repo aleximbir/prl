@@ -390,7 +390,7 @@ if ( ! class_exists( 'PRL_Meta_Boxes' ) ) {
 				}
 				$html .= '<div class="repeater-wrapper">';
 					ob_start();
-					echo get_repeater_content( $post->ID );
+					echo get_repeater_row_content( $post->ID );
 					$html .= ob_get_contents();
 					ob_clean();
 				$html .= '</div>'; // END repeater-wrapper

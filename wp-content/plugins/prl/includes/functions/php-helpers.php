@@ -1,10 +1,8 @@
 <?php
 function prl_print_r( $var = '' ) {
-	$ret  = '<pre>';
-	$ret .= print_r( $var );
-	$ret .= '</pre>';
-
-	return $ret;
+	echo '<pre style="text-align: left;">';
+		print_r( $var );
+	echo '</pre>';
 }
 
 function prl_isset_post( $var = '' ) {
@@ -14,5 +12,10 @@ function prl_isset_post( $var = '' ) {
 		$ret = '';
 	}
 
+	return $ret;
+}
+
+function prl_replace( $string, $old, $new ) {
+	$ret = str_replace( $old, $new, $string );
 	return $ret;
 }

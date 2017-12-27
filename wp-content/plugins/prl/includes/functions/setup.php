@@ -32,10 +32,10 @@ function prl_load_admin_scripts_and_styles() {
 
 	// Plugin Localize
 	wp_localize_script( 'main-admin-js', 'base_prl_admin_main', array(
-		'theme_path'             => get_template_directory_uri(),
-		'ajaxurl'                => admin_url( 'admin-ajax.php' ),
-		'repeater_content'       => get_repeater_content(),
-		'repeater_field_content' => get_repeater_fields_content(),
+		'theme_path'               => get_template_directory_uri(),
+		'ajaxurl'                  => admin_url( 'admin-ajax.php' ),
+		'repeater_row_content'     => get_repeater_row_content(),
+		'repeater_field_content'   => get_repeater_fields_content(),
 	));
 
 	// jQuery Sortable
@@ -59,7 +59,7 @@ function prl_includes(){
 	}
 
 	// Shortcodes
-	$shortcodes = prl_scan_folders( prl_plugin_path() . 'controllers' );
+	$shortcodes = prl_scan_folders( prl_plugin_path() . 'user_ui/controllers' );
 	foreach ( $shortcodes as $skey => $svar ) {
 		include_once $svar;
 	}

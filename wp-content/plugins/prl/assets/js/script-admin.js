@@ -7,7 +7,7 @@ jQuery( document ).ready( function( $ ) {
 	$( document ).on( 'click', '#repeater-new-row', function( e ) {
 		e.preventDefault();
 
-		var $content = $( base_prl_admin_main.repeater_content ); i++;
+		var $content = $( base_prl_admin_main.repeater_row_content ); i++;
 
 		$content.filter('.repeater-row').attr( 'id', 'repeater-row' + i );
 
@@ -100,7 +100,7 @@ jQuery( document ).ready( function( $ ) {
 
 	// Open settings popup
 	$( document ).on( 'click', '#prl-settings-modal', function( e ) {
-		$( this ).siblings( '.prl-popup' ).slideToggle();
+		$( this ).siblings( '.popup-wrapper' ).children( '.prl-popup' ).slideToggle();
 	});
 
 	// Empty popup onchange

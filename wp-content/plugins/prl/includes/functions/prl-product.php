@@ -1,5 +1,5 @@
 <?php
-function get_repeater_content( $id = '', $html = '' ) {
+function get_repeater_row_content( $id = '', $html = '' ) {
 
 	$rows = get_post_meta( $id, 'add_new_product_page', true );
 
@@ -81,8 +81,10 @@ function get_repeater_fields_content( $id = '', $row = array(), $html = '' ) {
 				}
 			$html .= '</select>';
 
+			$html .= '<span id="prl-settings-modal" class="dashicons dashicons-admin-tools"></span>';
+			$html .= '<span id="prl-move" class="dashicons dashicons-move"></span>';
+
 			$html .= '<div class="popup-wrapper">';
-				$html .= '<span id="prl-settings-modal" class="dashicons dashicons-admin-tools"></span>';
 				$html .= '<div class="prl-popup">';
 					ob_start();
 					echo get_input_type_content( $r );
@@ -90,8 +92,7 @@ function get_repeater_fields_content( $id = '', $row = array(), $html = '' ) {
 					ob_clean();
 				$html .= '</div>';
 			$html .= '</div>';
-
-			$html .= '<span id="prl-move" class="dashicons dashicons-move"></span>';
+			
 		$html .= '</div>';
 
 	}
