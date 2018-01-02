@@ -92,10 +92,12 @@ function prl_form( $arr = '' ) {
 			if ( $value ){
 				if ( is_array( $value ) ) {
 					foreach ( $value as $key => $val ) {
-						$ret .= '<option>' . $val . '</option>';
+						$selected = ( trim( $defval ) == trim( $val ) ) ? 'selected' : '';
+						$ret .= '<option ' . $selected . ' value="' . prl_replace( strtolower( $val ), ' ', '_' ) . '">' . $val . '</option>';
 					}
 				} else {
-					$ret .= '<option>' . $value . '</option>';
+					$selected = ( trim( $defval ) == trim( $value ) ) ? 'selected' : '';
+					$ret .= '<option ' . $selected . ' value="' . prl_replace( strtolower( $value ), ' ', '_' ) . '">' . $value . '</option>';
 				}
 			}
 			$ret .= '</select>';

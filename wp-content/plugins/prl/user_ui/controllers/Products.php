@@ -20,14 +20,14 @@ function prl_show_text_textarea_inp( $r = array() ) {
 
 	echo prl_form(
 		array(
-			'type' => $r['type'],
-			'name' => $r['type'] . '_' . prl_replace( strtolower( $r['name'] ), ' ', '_' ),
-			'class' => $r['class'],
-			'id' => $r['id'],
+			'type'        => $r['type'],
+			'name'        => $r['type'] . '_' . prl_replace( strtolower( $r['name'] ), ' ', '_' ),
+			'class'       => $r['class'],
+			'id'          => $r['id'],
 			'placeholder' => $r['placeHolder'],
-			'value' => $r['defaultValue'],
-			'disabled' => $r['disabled'],
-			'readonly' => $r['readOnly']
+			'value'       => $r['defaultValue'],
+			'disabled'    => $r['disabled'],
+			'readonly'    => $r['readOnly']
 		)
 	);
 
@@ -35,6 +35,7 @@ function prl_show_text_textarea_inp( $r = array() ) {
 
 // Content for radio input and checkbox input
 function prl_show_radio_checkbox_inp( $r = array() ) {
+
 	if ( isset( $r['values'] ) && !empty( $r['values'][0] ) ) {
 		if ( is_array( $r['values'] ) ) {
 			
@@ -42,16 +43,23 @@ function prl_show_radio_checkbox_inp( $r = array() ) {
 			
 			foreach ( $r['values'] as $key => $value ) {
 				$radio = $r['type'] == "radio" ? ' radio ' : ' ';
-				echo '<div class="ui'.$radio.'checkbox">';
+
+				$curr_val = prl_replace( strtolower( $value ), ' ', '_' );
+				$def_val = prl_replace( strtolower( $r['defaultValue'] ), ' ', '_' );
+				
+				$checked = trim( $curr_val ) == trim( $def_val ) ? 'checked' : '';
+
+				echo '<div class="ui' . $radio . 'checkbox">';
 					echo prl_form(
 						array(
-							'type' => $r['type'],
-							'name' => $r['type'] . '_' . prl_replace( strtolower( $r['name'] ), ' ', '_' ),
-							'class' => $r['class'],
-							'id' => $r['id'],
-							'value' => $value,
+							'type'     => $r['type'],
+							'name'     => $r['type'] . '_' . prl_replace( strtolower( $r['name'] ), ' ', '_' ),
+							'class'    => $r['class'],
+							'id'       => $r['id'],
+							'value'    => $value,
 							'disabled' => $r['disabled'],
-							'readonly' => $r['readOnly']
+							'readonly' => $r['readOnly'],
+							'checked'  => $checked,
 						)
 					);
 					echo prl_lbl( $value, 'yes' );
@@ -67,13 +75,14 @@ function prl_show_select_inp( $r = array() ) {
 
 	echo prl_form(
 		array(
-			'type' => $r['type'],
-			'name' => $r['type'] . '_' . prl_replace( strtolower( $r['name'] ), ' ', '_' ),
-			'class' => $r['class'],
-			'id' => $r['id'],
-			'value' => $r['values'],
+			'type'     => $r['type'],
+			'name'     => $r['type'] . '_' . prl_replace( strtolower( $r['name'] ), ' ', '_' ),
+			'class'    => $r['class'],
+			'id'       => $r['id'],
+			'value'    => $r['values'],
 			'disabled' => $r['disabled'],
-			'readonly' => $r['readOnly']
+			'readonly' => $r['readOnly'],
+			'defval'   => $r['defaultValue'],
 		)
 	);
 }
@@ -86,8 +95,8 @@ function prl_show_toggle_inp( $r = array() ) {
 		echo '<div class="ui toggle checkbox">';
 			echo prl_form(
 				array(
-					'type' => 'checkbox',
-					'name' => $r['type'] . '_' . prl_replace( strtolower( $r['name'] ), ' ', '_' ),
+					'type'  => 'checkbox',
+					'name'  => $r['type'] . '_' . prl_replace( strtolower( $r['name'] ), ' ', '_' ),
 					'class' => 'hidden'
 				)
 			);
@@ -104,23 +113,11 @@ function prl_show_file_inp( $r = array() ) {
 
 	echo '
 		<div class="dropzone dropzone-class">
-			<div class="dz-message needsclick">
-				Drop files here or click to upload.<br />
-				<span class="note needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>
+			<div class="dz-message">
+				' . prl_lbl( 'Drop files here or click to upload.' ) . '
 			</div>
 		</div>
 	';
-
-	/*echo prl_form(
-		array(
-			'type' => $r['type'],
-			'name' => $r['type'] . '_' . prl_replace( strtolower( $r['name'] ), ' ', '_' ),
-			'class' => $r['class'] . ' dropzone-class',
-			'id' => $r['id'],
-			'disabled' => $r['disabled'],
-			'readonly' => $r['readOnly']
-		)
-	);*/
 }
 
 // Content for wysiwyg input
@@ -131,14 +128,14 @@ function prl_show_wysiwyg_inp( $r = array() ) {
 
 	echo prl_form(
 		array(
-			'type' => 'textarea',
-			'name' => $r['type'] . '_' . prl_replace( strtolower( $r['name'] ), ' ', '_' ),
-			'class' => $r['class'] . ' wysiwyg-class',
-			'id' => $r['id'],
+			'type'        => 'textarea',
+			'name'        => $r['type'] . '_' . prl_replace( strtolower( $r['name'] ), ' ', '_' ),
+			'class'       => $r['class'] . ' wysiwyg-class',
+			'id'          => $r['id'],
 			'placeholder' => $r['placeHolder'],
-			'value' => $r['defaultValue'],
-			'disabled' => $r['disabled'],
-			'readonly' => $r['readOnly']
+			'value'       => $r['defaultValue'],
+			'disabled'    => $r['disabled'],
+			'readonly'    => $r['readOnly']
 		)
 	);
 }
