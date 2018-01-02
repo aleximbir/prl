@@ -10,7 +10,7 @@
 */
 
 // Define plugin version
-DEFINE( "prl_VERSION", "1.0.0" );
+DEFINE( "PRL_VERSION", "1.0.0" );
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {

@@ -1,6 +1,4 @@
 /*** ADD NEW PRODUCT ***/
-
-/* REPEATER */
 .repeater-wrapper input:not([type=checkbox]):not([type=radio]) {
 	border: 1px solid #c0c0c0;
 	width: 40%;
